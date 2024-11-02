@@ -1,9 +1,9 @@
 import { platilloProp } from "@/models/platilloProp";
 import "./cardPlatillo.css";
 import CounterControl from "@/components/counterControl/CounterControl";
-import NextIcon from "@/assets/icons/nextIcon";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import NextIcon from "@/assets/icons/NextIcon";
 
 const CardPlatillo = ({ platillo, isCliente = true }) => {
   const [isHovered, setIsHovered] = useState(false);
