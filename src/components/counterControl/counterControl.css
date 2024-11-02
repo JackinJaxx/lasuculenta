@@ -1,0 +1,51 @@
+.counter-control {
+  display: flex;
+  width: fit-content; /* Ajusta el ancho al contenido */
+  height: fit-content; /* Ajusta la altura al contenido */
+  padding: 5px 10px; /* Añade espacio alrededor del contenido */
+   /* Distribuye el espacio entre los elementos */
+   gap: 5px;
+  align-items: center; /* Alinea los elementos verticalmente */
+  border-radius: 20px;
+  background: var(--ColorCrema);
+}
+
+.counter-buttons {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ColorOscuro);
+  align-items: center;
+  justify-content: center;
+
+  color: var(--ColorCrema);
+  /* Logo */
+  font-family: JejuMyeongjo;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px; /* Igual al height para centrar el texto */
+}
+
+.counter-buttons:active {
+    color: var(--ColorTerracota);
+}
+
+.counter-control input {
+  /*quitar los estilos por defecto del botón */
+  all: unset;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  color: var(--ColorOscuro);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Logo */
+  font-family: JejuMyeongjo;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

@@ -1,0 +1,47 @@
+.customer-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container p {
+  color: var(--ColorOscuro);
+
+  /* Headers */
+  font-family: "Arima Madurai";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 91.667% */
+}
+
+.login-items {
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+
+  border-radius: 20px;
+  border: 2px solid var(--ColorCafeOscuro);
+  background: var(--ColorCrema);
+}
+
+.waiter-card {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  gap: 40px;
+}

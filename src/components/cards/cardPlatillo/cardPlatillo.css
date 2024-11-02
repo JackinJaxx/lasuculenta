@@ -1,0 +1,111 @@
+.card-platillo {
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.img-container {
+  display: flex;
+  height: 300px;
+  width: 300px; /* para que sea circular */
+  border-radius: 50%; /* crea una forma circular */
+  border: 8px solid var(--ColorCafeOscuro);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.img-container:hover {
+  /* hacer la imagen menos brillosa */
+  
+ /* si se ejecuta una vez terminarla no dejar que se empeize otra */
+  animation: bounce 0.8s ease-in-out forwards;
+  animation-play-state: running;
+  
+}
+
+.img-container img {
+  transition: filter 0.5s;
+}
+
+.img-container:hover img {
+  filter: brightness(0.6);
+}
+
+.overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.counter-container {
+  flex-grow: 1; 
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.next-icon{
+  flex-grow: 1; 
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+}
+
+.next-icon svg:hover > path {
+  fill: var(--ColorTerracota);
+  transition: fill 0.5s;
+}
+
+/*efecto escale al click */
+.next-icon svg:active > path {
+  transform: translateY(4px);
+  transition: transform 0.2s;
+}
+
+
+
+button {
+    /*quitar los estilos por defecto del botón */
+    all : unset;
+}
+
+
+
+@keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-15px); /* Sube la imagen */
+    }
+    50% {
+      transform: translateY(10px); /* Rebote hacia abajo */
+    }
+    100% {
+      transform: translateY(0); /* Regresa a su posición original */
+    }
+  }
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ajusta la imagen para llenar el contenedor sin distorsión */
+}
+
+.info-container p {
+  margin: 0;
+  color: var(--ColorCafeOscuro);
+  text-align: center;
+  font-family: Imprima;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

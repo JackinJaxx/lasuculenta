@@ -1,0 +1,286 @@
+[
+  {
+    "id": "1",
+    "name": "Expresso",
+    "sell_price": 25,
+    "cost_price": 10,
+    "ingredients": [
+      {
+        "id": "1",
+        "quantity": 1
+      }
+    ],
+    "img": "https://cdn.pixabay.com/photo/2017/06/16/03/54/coffee-2407662_1280.jpg",
+    "category": "Bebidas Calientes"
+  },
+  {
+    "id": "2",
+    "name": "Americano",
+    "sell_price": 30,
+    "cost_price": 12,
+    "ingredients": [
+      {
+        "id": "2",
+        "quantity": 1
+      }
+    ],
+    "img": "https://cdn.pixabay.com/photo/2014/12/11/02/56/coffee-563797_1280.jpg",
+    "category": "Bebidas Calientes"
+  },
+  {
+    "id": "3",
+    "name": "Cappuccino",
+    "sell_price": 35,
+    "cost_price": 15,
+    "ingredients": [
+      {
+        "id": "3",
+        "quantity": 1
+      },
+      {
+        "id": "4",
+        "quantity": 1
+      }
+    ],
+    "img": "https://cdn.pixabay.com/photo/2018/11/25/11/03/aroma-3837158_1280.jpg",
+    "category": "Bebidas Calientes"
+  },
+  {
+    "id": "4",
+    "name": "Latte",
+    "sell_price": 35,
+    "cost_price": 15,
+    "ingredients": [
+      {
+        "id": "5",
+        "quantity": 1
+      }
+    ],
+    "img": "https://cdn.pixabay.com/photo/2021/08/21/06/23/coffee-6561887_1280.jpg",
+    "category": "Bebidas Calientes"
+  },
+  {
+    "id": "5",
+    "name": "Té Negro",
+    "sell_price": 20,
+    "cost_price": 8,
+    "ingredients": [
+      {
+        "id": "6",
+        "quantity": 1
+      }
+    ],
+    "img": "https://teterum.com/cdn/shop/articles/te-oolong-con-hierbas.jpg?v=1675390111",
+    "category": "Bebidas Calientes"
+  },
+  {
+    "id": "6",
+    "name": "Cold Brew",
+    "sell_price": 35,
+    "cost_price": 15,
+    "ingredients": [
+      {
+        "id": "7",
+        "quantity": 1
+      }
+    ],
+    "img": "https://ineffablecoffee.com/wp-content/uploads/2021/05/blog-ineffablecoffee-roasters-cafe-cold-brew-00.jpg",
+    "category": "Bebidas Frías"
+  },
+  {
+    "id": "7",
+    "name": "Frappé de Café",
+    "sell_price": 40,
+    "cost_price": 18,
+    "ingredients": [
+      {
+        "id": "8",
+        "quantity": 1
+      }
+    ],
+    "img": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/1B86120A-212C-476F-A8A0-F18C7E94F5D6/Derivates/08320cf9-7c2f-4543-b0ef-1599966d6b9f.jpg",
+    "category": "Bebidas Frías"
+  },
+  {
+    "id": "8",
+    "name": "Iced Latte",
+    "sell_price": 35,
+    "cost_price": 15,
+    "ingredients": [
+      {
+        "id": "9",
+        "quantity": 1
+      }
+    ],
+    "img": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/iced-latte-30188f7.jpg",
+    "category": "Bebidas Frías"
+  },
+  {
+    "id": "9",
+    "name": "Té Helado",
+    "sell_price": 25,
+    "cost_price": 10,
+    "ingredients": [
+      {
+        "id": "10",
+        "quantity": 1
+      }
+    ],
+    "img": "https://cdn7.kiwilimon.com/recetaimagen/3613/18285.jpg",
+    "category": "Bebidas Frías"
+  },
+  {
+    "id": "10",
+    "name": "Smoothie de Fresa",
+    "sell_price": 45,
+    "cost_price": 20,
+    "ingredients": [
+      {
+        "id": "11",
+        "quantity": 1
+      }
+    ],
+    "img": "https://storage.googleapis.com/avena-recipes/2019/10/1571780197368.jpeg",
+    "category": "Bebidas Frías"
+  },
+  {
+    "id": "11",
+    "name": "Sándwich de Jamón y Queso",
+    "sell_price": 40,
+    "cost_price": 18,
+    "ingredients": [
+      {
+        "id": "12",
+        "quantity": 1
+      }
+    ],
+    "img": "https://www.bimbo.es/uploads/11-sandwich-con-queso-lechuga-tomate-mayonesa-y-pechuga-de-pavo-a-las-finas-hierbas.webp",
+    "category": "Desayunos"
+  },
+  {
+    "id": "12",
+    "name": "Bagel de Aguacate",
+    "sell_price": 45,
+    "cost_price": 20,
+    "ingredients": [
+      {
+        "id": "13",
+        "quantity": 1
+      }
+    ],
+    "img": "https://d36fw6y2wq3bat.cloudfront.net/recipes/bagel-de-aguacate-y-semillas-de-chia/900/bagel-de-aguacate-y-semillas-de-chia.jpg",
+    "category": "Desayunos"
+  },
+  {
+    "id": "13",
+    "name": "Tostadas de Aguacate",
+    "sell_price": 35,
+    "cost_price": 15,
+    "ingredients": [
+      {
+        "id": "14",
+        "quantity": 1
+      }
+    ],
+    "img": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/9095F1E1-5407-4953-9228-49AC7AAA8288/Derivates/b183ba61-d10f-4b04-85a6-22a056371b7b.jpg",
+    "category": "Desayunos"
+  },
+  {
+    "id": "14",
+    "name": "Açaí Bowl",
+    "sell_price": 55,
+    "cost_price": 25,
+    "ingredients": [
+      {
+        "id": "15",
+        "quantity": 1
+      }
+    ],
+    "img": "https://d36fw6y2wq3bat.cloudfront.net/recipes/acai-bowl/900/acai-bowl_version_1684209658.jpg",
+    "category": "Desayunos"
+  },
+  {
+    "id": "15",
+    "name": "Huevos a la Mexicana",
+    "sell_price": 35,
+    "cost_price": 15,
+    "ingredients": [
+      {
+        "id": "16",
+        "quantity": 1
+      }
+    ],
+    "img": "https://cocinamia.com.mx/wp-content/uploads/2021/01/huevos-a-la-mexicana-1-1100x500.jpg",
+    "category": "Desayunos"
+  },
+  {
+    "id": "16",
+    "name": "Cheesecake",
+    "sell_price": 60,
+    "cost_price": 30,
+    "ingredients": [
+      {
+        "id": "17",
+        "quantity": 1
+      }
+    ],
+    "img": "https://mandolina.co/wp-content/uploads/2024/04/Cheesecake-de-Frutos-Rojos-1080x550-1-1200x675.jpg",
+    "category": "Pastelería y Panadería"
+  },
+  {
+    "id": "17",
+    "name": "Carrot Cake",
+    "sell_price": 55,
+    "cost_price": 25,
+    "ingredients": [
+      {
+        "id": "18",
+        "quantity": 1
+      }
+    ],
+    "img": "https://www.inspiredtaste.net/wp-content/uploads/2024/01/Carrot-Cake-Recipe-Video.jpg",
+    "category": "Pastelería y Panadería"
+  },
+  {
+    "id": "18",
+    "name": "Muffin de Chocolate",
+    "sell_price": 25,
+    "cost_price": 10,
+    "ingredients": [
+      {
+        "id": "19",
+        "quantity": 1
+      }
+    ],
+    "img": "https://www.cocinadelirante.com/800x600/filters:format(webp):quality(75)/sites/default/files/images/2020/04/muffin-de-chocolate-tipo-costco.jpg",
+    "category": "Pastelería y Panadería"
+  },
+  {
+    "id": "19",
+    "name": "Croissant",
+    "sell_price": 20,
+    "cost_price": 8,
+    "ingredients": [
+      {
+        "id": "20",
+        "quantity": 1
+      }
+    ],
+    "img": "https://img.hellofresh.com/hellofresh_s3/image/645af756cd93ab51c00178bc-15c2ff16.jpg",
+    "category": "Pastelería y Panadería"
+  },
+  {
+    "id": "20",
+    "name": "Brownie",
+    "sell_price": 30,
+    "cost_price": 12,
+    "ingredients": [
+      {
+        "id": "21",
+        "quantity": 1
+      }
+    ],
+    "img": "https://recetasdecocina.elmundo.es/wp-content/uploads/2016/11/brownie-de-chocolate.jpg",
+    "category": "Pastelería y Panadería"
+  }
+]

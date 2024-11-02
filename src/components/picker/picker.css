@@ -1,0 +1,88 @@
+.picker {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  gap: 20px;
+  border-radius: 20px;
+  background: var(--ColorCafeOscuro);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.picker button {
+  display: flex;
+  min-width: 197px;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  background: var(--ColorCrema);
+  transition: border 0.3s;
+
+  box-sizing: border-box;
+}
+
+.picker button:active {
+  border: 3px solid var(--ColorTerracota);
+  background: var(--ColorCrema);
+}
+
+.picker button:focus {
+  border: 3px solid var(--ColorTerracota);
+  background: var(--ColorCrema);
+}
+
+.picker-button svg > path {
+  animation: rotate-back 0.5s ease-in-out forwards;
+}
+
+.picker-button:active svg > path {
+  animation: rotate-back-complete 0.5s ease-in-out;
+}
+
+@keyframes rotate-back {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg); /* Rotación al ángulo deseado */
+  }
+  100% {
+    transform: rotate(0deg); /* Regresa a su posición original */
+  }
+}
+
+.picker button:hover p {
+  color: var(--ColorTerracota, #c4753d);
+}
+
+.picker button:hover svg > path {
+  transition: stroke 0.2s;
+  stroke: var(--ColorTerracota, #c4753d);
+}
+
+.picker button:focus p {
+  color: var(--ColorTerracota, #c4753d);
+}
+
+.picker button:focus svg > path {
+  transition: stroke 0.2s;
+  stroke: var(--ColorTerracota, #c4753d);
+}
+
+.icon {
+  display: flex;
+}
+
+.picker p {
+  color: var(--ColorOscuro);
+  transition: color 0.2s;
+  font-family: "Arima Madurai";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 0;
+  margin: 0;
+}
