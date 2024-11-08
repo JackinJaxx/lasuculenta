@@ -1,19 +1,21 @@
-.customer-page {
+.waiter-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px 100px;
   justify-content: center;
 }
 
-.menu {
+.menu-waiter {
   display: flex;
   justify-content: center;
-  padding: 40px 0;
 }
 
 .login-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .login-container p {
@@ -28,20 +30,102 @@
 }
 
 .login-items {
-  display: flex;
+  display: block;
   padding: 40px;
   flex-direction: column;
-  align-items: flex-end;
   gap: 20px;
-
+  width: 100%;
   border-radius: 20px;
   border: 2px solid var(--ColorCafeOscuro);
-  background: var(--ColorCrema);
+  background: var(--ColorOscuro);
+  height: 600px;
+  overflow-y: auto;
 }
 
+.search {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
 .waiter-card {
   display: flex;
+  cursor: pointer;
   padding: 20px;
-  align-items: center;
+  justify-content: flex-start;
   gap: 40px;
+  border-radius: 20px;
+  background: var(--ColorCrema);
+  margin-bottom: 20px; /* Añade espacio entre las tarjetas */
+  transition: border 0.3s;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  height: 81px;
+}
+
+.waiter-actions{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.waiter-card.expanded {
+  height: 90px; /* Altura de la tarjeta cuando está expandida */
+  opacity: 1; /* Mantén la opacidad al 100% */
+}
+
+.waiter-card:hover {
+  box-shadow: inset 0 0 0 3px var(--ColorCafeClaro);
+}
+
+
+.waiter-info {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+}
+
+.waiter-card.expanded  .waiter-info p {
+  color: var(--ColorCafeOscuro);
+}
+
+.waiter-info p {
+  color: var(--ColorCafeClaro);
+
+  /* Headers */
+  font-family: "Arima Madurai";
+  margin: 0;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 91.667% */
+  transition: color 0.3s;
+}
+
+.error-msg{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.error-msg p {
+  color: var(--ColorCafeOscuro);
+
+  /* Headers */
+  font-family: "Arima Madurai";
+  margin: 0;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 91.667% */
+  transition: color 0.3s;
+}
+
+.waiter-info button {
+  border-radius: 20px;
+  padding: 5px 10px;
+  background: var(--ColorTerracota);
 }

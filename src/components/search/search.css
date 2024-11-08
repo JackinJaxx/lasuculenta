@@ -1,0 +1,25 @@
+.search-container {
+  display: flex;
+  width: fit-content;
+  height: 48px;
+  padding: 0px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  border: 1px solid #000;
+  background: var(--ColorCrema);
+}
+
+.search-input {
+    max-width: 150px;
+  border: none;
+  height: 32px;
+  outline: none;
+  background: none;
+  padding: 0;
+  color: var(--ColorCafeClaro);
+  font-family: JejuMyeongjo;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+}

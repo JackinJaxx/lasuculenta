@@ -3,7 +3,7 @@ import HeaderComponent from "@/components/header/Header";
 import Picker from "@/components/picker/Picker";
 import "./customer.css";
 import { useEffect, useState } from "react";
-import usePlatillos from "@/services/PlatillosService";
+import usePlatillos from "@/hooks/PlatillosService";
 import BebidasCalientesIcon from "@/assets/icons/BebidasCalientesIcon";
 import BebidasFriasIcon from "@/assets/icons/BebidasFriasIcon";
 import { motion, AnimatePresence } from "framer-motion";

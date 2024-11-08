@@ -1,3 +1,74 @@
 header {
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+header.small {
+  justify-content: space-between;
+}
+
+.header-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-options p {
+  color: var(--ColorOscuro);
+  font-family: JejuMyeongjo;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.header-options .notification,
+.profile {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.header-options .notification:hover,
+.profile:hover {
+  transform: scale(1.1);
+}
+
+
+.profile-menu {
+  position: absolute;
+  min-width: 150px;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.profile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--ColorOscuro);
+  text-align: center;
+  font-family: Arima Madurai;
+  transition: color 0.3s;
+}
+
+.profile-menu li:hover {
+  background-color: var(--ColorTerracota);
+  color: white;
 }
