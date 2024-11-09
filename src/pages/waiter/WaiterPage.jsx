@@ -72,9 +72,6 @@ const WaiterPage = () => {
             selectedWaiter: parsedWaiter,
             isLoggedIn: true,
           });
-          connect(); // Conectar al WebSocket si ya hay un mesero autenticado
-          fetchPlatillos(); // Cargar la lista de platillos al iniciar sesión
-        } else {
           throw new Error("Datos de mesero no válidos en localStorage");
         }
       } else {
@@ -90,8 +87,26 @@ const WaiterPage = () => {
     if (errorSocket) {
       console.error("Error en el WebSocket:", errorSocket);
       handleLogout(); // Cierra la sesión y desconecta el WebSocket si hay error
+      return;
     }
-  }, [errorSocket]);
+
+    if (isConnected) {
+      if (socketData) {
+        console.log("Datos del WebSocket", socketData);
+      }
+    }
+  }, [errorSocket, isConnected, socketData]);
+
+  useEffect(() => {
+    if (authState.isLoggedIn && authState.selectedWaiter && !isConnected) {
+      if (!authState.selectedWaiter) {
+        console.warn("Ningún mesero seleccionado para iniciar sesión");
+        return;
+      }
+      connect(); // Conectar al WebSocket
+      fetchPlatillos(); // Cargar la lista de platillos al iniciar sesión
+    }
+  }, [authState.isLoggedIn, authState.selectedWaiter]);
 
   // Función para iniciar sesión del mesero seleccionado
   const handleLogin = () => {
@@ -106,8 +121,6 @@ const WaiterPage = () => {
         JSON.stringify(authState.selectedWaiter)
       );
       setAuthState((prevState) => ({ ...prevState, isLoggedIn: true }));
-      connect(); // Conectar al WebSocket después de iniciar sesión
-      fetchPlatillos(); // Cargar la lista de platillos al iniciar sesión
     } catch (e) {
       console.error("Error al guardar el mesero en localStorage:", e);
     }
