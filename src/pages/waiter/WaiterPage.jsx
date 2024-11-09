@@ -12,6 +12,9 @@ import CategoryPicker from "@/components/categoryPicker/CategoryPicker";
 import usePlatillos from "@/hooks/PlatillosService";
 import MenuContainer from "@/components/menuContainer/MenuContainer";
 import ShoppingCard from "@/components/shoppingCard/ShoppingCard";
+import ModalTable from "@/components/modal/ModalTable";
+import useOrders from "@/hooks/OrderService";
+import Alert from "@/components/alert/AlertCustom";
 
 const WaiterPage = () => {
   const { data: waiters, loading, error, fetchWaiters } = useWaiters();
@@ -21,6 +24,14 @@ const WaiterPage = () => {
     error: errorPlatillos,
     fetchPlatillos,
   } = usePlatillos();
+
+  const {
+    data: order,
+    loading: loadingOrder,
+    error: errorOrder,
+    saveOrder,
+  } = useOrders();
+
   const [authState, setAuthState] = useState({
     selectedWaiter: null,
     isLoggedIn: false,
@@ -29,6 +40,12 @@ const WaiterPage = () => {
   const [searchText, setSearchText] = useState(""); // Estado para el texto de búsqueda
 
   const [shoppingCart, setShoppingCart] = useState([]); // Estado para el carrito de compras
+  const [showTablePopup, setShowTablePopup] = useState(false);
+  const [selectedTable, setSelectedTable] = useState(null);
+  const [popupHandlers, setPopupHandlers] = useState({
+    selectTableHandler: () => {},
+    closePopupHandler: () => {},
+  });
 
   const {
     socketData,
@@ -145,6 +162,66 @@ const WaiterPage = () => {
     }
   };
 
+  const beforeExpand = () => {
+    return new Promise((resolve, reject) => {
+      setShowTablePopup(true);
+
+      // Almacena las funciones de resolver/rechazar para usarlas en los eventos
+      const selectTableHandler = (tableNumber) => {
+        setSelectedTable(tableNumber);
+        setShowTablePopup(false);
+        resolve(tableNumber); // Resuelve la Promise con el número de mesa seleccionado
+      };
+
+      const closePopupHandler = () => {
+        setShowTablePopup(false);
+        reject(); // Rechaza la Promise si se cierra sin seleccionar
+      };
+
+      // Asignamos los handlers en el estado para accederlos en el popup
+      setPopupHandlers({ selectTableHandler, closePopupHandler });
+    });
+  };
+
+  const handleSendOrder = (clientName, onSucess) => {
+    console.log("Enviando pedido...");
+
+    if (platillos.length === 0) {
+      Alert.error("Error", "No hay platillos en el pedido");
+    } else {
+      const details = shoppingCart.flatMap((platillo) =>
+        Array.from({ length: platillo.count }, () => ({
+          dish: { id: platillo.id },
+        }))
+      );
+
+      saveOrder([
+        {
+          table_number: selectedTable,
+          client_name: clientName,
+          take_by: {
+            id: authState.selectedWaiter.id,
+          },
+          details: details,
+        },
+      ])
+        .then(() => {
+          Alert.success(
+            "Pedido enviado",
+            "El pedido se ha enviado correctamente"
+          );
+          setShoppingCart([]); // Limpiar el carrito después de enviar el pedido
+          setSelectedTable(null);
+          if (typeof onSucess === "function") {
+            onSucess();
+          }
+        })
+        .catch(() => {
+          Alert.error("Error", "No se pudo enviar el pedido");
+        });
+    }
+  };
+
   const renderWaitersList = () => {
     return (
       <div className="login-container">
@@ -195,6 +272,10 @@ const WaiterPage = () => {
           minimized={authState.isLoggedIn}
           user={authState.selectedWaiter}
           onLogout={handleLogout}
+          socket={{
+            isConnected,
+            socketData,
+          }}
         />
         {authState.isLoggedIn ? (
           <>
@@ -227,8 +308,13 @@ const WaiterPage = () => {
           </div>
         )}
       </div>
-      <Loader isLoading={false} />
-      <ShoppingCard platillos={shoppingCart} />
+      <Loader isLoading={loadingOrder} />
+      <ShoppingCard
+        platillos={shoppingCart}
+        beforeExpand={beforeExpand}
+        handleSendOrder={handleSendOrder}
+      />
+      <ModalTable isVisible={showTablePopup} handlers={popupHandlers} />
     </>
   );
 };

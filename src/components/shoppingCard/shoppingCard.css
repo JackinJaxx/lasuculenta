@@ -78,6 +78,11 @@
   top: 35px;
 }
 
+.shopping-minimize svg {
+  color: var(--ColorTerracota);
+  cursor: pointer;
+}
+
 .shopping-header input::placeholder {
   color: var(--ColorTerracota); /* Color del placeholder */
   font-size: 16px; /* Tamaño de la fuente */
@@ -138,4 +143,52 @@
   align-items: center;
   border-radius: 20px;
   background: var(--ColorAzulVerdoso);
+  transition: background 0.3s;
+  transition: transform 0.3s;
 }
+
+
+.shopping-button:hover {
+  background: var(--ColorTerracota);
+  transform: scale(1.1);
+}
+
+.shopping-button.disabled{
+  background: rgb(200, 200, 200, 0.5);
+}
+
+.shopping-error {
+  animation: bounce 0.6s ease ; /* Aplica la animación */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Posición inicial y final */
+  }
+  50% {
+    transform: translateY(-10px); /* Rebote hacia arriba */
+  }
+}
+
+.shopping-error-msg{
+  color: var(--ColorCafeOscuro);
+  font-family: "Arima Madurai";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+.shopping-header-title{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.table-number{
+  font-size: 13px !important;
+  padding-bottom: 6px;
+}
+

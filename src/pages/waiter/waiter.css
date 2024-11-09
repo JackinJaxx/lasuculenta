@@ -59,6 +59,7 @@
   transition: border 0.3s;
   transition: height 0.3s ease, opacity 0.3s ease;
   height: 81px;
+  box-shadow: inset 0 0 0 2px var(--ColorCafeClaro);
 }
 
 .waiter-actions{
@@ -73,7 +74,7 @@
 }
 
 .waiter-card:hover {
-  box-shadow: inset 0 0 0 3px var(--ColorCafeClaro);
+  box-shadow: inset 0 0 0 2px var(--ColorOscuro);
 }
 
 

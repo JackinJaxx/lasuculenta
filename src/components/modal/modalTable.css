@@ -1,0 +1,76 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-table {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  background-color: var(--ColorCafeClaro);
+  box-sizing: border-box;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.modal-header button {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.modal-header button:hover svg {
+  color: var(--ColorCafeOscuro);
+  transition: color 0.3s;
+}
+
+.modal-header button svg {
+  color: var(--ColorCrema);
+}
+
+.modal-header p {
+  margin: 0;
+  color: var(--ColorCrema);
+  font-family: "Arima Madurai";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+}
+
+.modal-body {
+  background: var(--ColorCrema);
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 800px;
+  flex-wrap: wrap;
+}
+
+.modal-body button {
+  background: var(--ColorAzulVerdoso);
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  text-align: center;
+  color: var(--ColorCrema);
+  transition: background 0.3s;
+}
+
+.modal-body button:hover {
+  background: var(--ColorCafeOscuro);
+}

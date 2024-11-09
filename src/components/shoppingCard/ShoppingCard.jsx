@@ -2,42 +2,77 @@ import ShoppingCardIcon from "@/assets/icons/ShoppingCarIcon";
 import "./shoppingCard.css";
 import { useState } from "react";
 import PropTypes from "prop-types";
-const ShoppingCard = ({ platillos }) => {
+import ShoppingMinimizeIcon from "@/assets/icons/ShoppingMinimizeIcon";
+import { set } from "react-hook-form";
+
+const ShoppingCard = ({ platillos, handleSendOrder, beforeExpand }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [clientName, setClientName] = useState("");
+  const [error, setError] = useState(null);
+  const [showErrorAnimation, setShowErrorAnimation] = useState(false);
+  const [tableSelected, setTableSelected] = useState(null);
 
   const toggleCart = () => {
-    setIsExpanded(true); // Expande la tarjeta solo cuando está minimizada
+    if (platillos.length > 0 && tableSelected) {
+      setIsExpanded(!isExpanded);
+    } else {
+      setClientName("");
+      beforeExpand()
+        .then((table) => {
+          setIsExpanded(true);
+          setTableSelected(table);
+        })
+        .catch(() => {
+          console.log("Expansión cancelada o popup cerrado sin selección");
+        });
+    }
   };
 
   const minimizeCart = (event) => {
-    event.stopPropagation(); // Evita que el evento se propague
-    setIsExpanded(false); // Minimiza la tarjeta
+    event.stopPropagation();
+    setIsExpanded(false);
+  };
+
+  const onSucess = () => {
+    setClientName("");
+    setIsExpanded(false);
+    setTableSelected(null);
+  };
+
+  const handleSendClick = () => {
+    if (platillos.length === 0 || clientName === "") {
+      setError("Debes agregar el nombre del cliente ");
+      setShowErrorAnimation(false); // Resetea la animación quitando la clase temporalmente
+      setTimeout(() => setShowErrorAnimation(true), 0); // Activa la clase para la animación
+      return;
+    }
+    setError(null);
+    setShowErrorAnimation(false);
+    handleSendOrder(clientName, onSucess);
   };
 
   return (
     <div
       className={`shopping-card ${isExpanded ? "expanded" : ""}`}
-      onClick={!isExpanded ? toggleCart : null} // Solo asigna el evento cuando está minimizado
+      onClick={!isExpanded ? toggleCart : null}
     >
       {isExpanded ? (
         <div className="shopping-card-inside">
           <div className="shopping-minimize" onClick={minimizeCart}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="4"
-              viewBox="0 0 24 4"
-              fill="none"
-            >
-              <path
-                d="M-8 2C-8 1.46957 -7.78929 0.96086 -7.41421 0.585787C-7.03914 0.210714 -6.53043 0 -6 0H22C22.5304 0 23.0391 0.210714 23.4142 0.585787C23.7893 0.96086 24 1.46957 24 2C24 2.53043 23.7893 3.03914 23.4142 3.41421C23.0391 3.78929 22.5304 4 22 4H-6C-6.53043 4 -7.03914 3.78929 -7.41421 3.41421C-7.78929 3.03914 -8 2.53043 -8 2Z"
-                fill="black"
-              />
-            </svg>
+            <ShoppingMinimizeIcon />
           </div>
           <div className="shopping-header">
-            <p>Pedido</p>
-            <input type="text" placeholder="Ingresa el nombre del cliente" />
+            <div className="shopping-header-title">
+              <p>Pedido</p>
+              <p className="table-number">Mesa {tableSelected}</p>
+            </div>
+            <input
+              type="text"
+              className={showErrorAnimation ? "shopping-error" : ""}
+              placeholder="Ingresa el nombre del cliente"
+              value={clientName}
+              onChange={(e) => setClientName(e.target.value)}
+            />
           </div>
           <div className="shopping-items">
             {platillos.map((platillo) => (
@@ -47,7 +82,15 @@ const ShoppingCard = ({ platillos }) => {
               </div>
             ))}
           </div>
-          <button className="shopping-button">Enviar</button>
+          <button
+            className={`shopping-button ${
+              platillos.length === 0 || clientName === "" ? "disabled" : ""
+            }`}
+            onClick={handleSendClick}
+          >
+            Enviar
+          </button>
+          {error && <p className="shopping-error-msg">{error}</p>}
         </div>
       ) : (
         <ShoppingCardIcon />
@@ -64,6 +107,8 @@ ShoppingCard.propTypes = {
       count: PropTypes.number.isRequired,
     })
   ).isRequired,
+  handleSendOrder: PropTypes.func.isRequired,
+  beforeExpand: PropTypes.func.isRequired,
 };
 
 export default ShoppingCard;

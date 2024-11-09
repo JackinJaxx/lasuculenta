@@ -2,11 +2,17 @@ import LogoLargeIcon from "@/assets/icons/LogoLargeIcon";
 import "./header.css";
 import PropTypes from "prop-types";
 import LogoSmallIcon from "@/assets/icons/LogoSmallIcon";
-import NotificacionesIcon from "@/assets/icons/NotificacionesIcon";
 import PerfilIcon from "@/assets/icons/PerfilIcon";
 import { useEffect, useState } from "react";
+import Notifications from "../Notifications/Notifications";
 
-const HeaderComponent = ({ minimized = false, user, onLogout }) => {
+const HeaderComponent = ({
+  minimized = false,
+  user,
+  onLogout,
+  isProfile = true,
+  socket,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
@@ -38,9 +44,11 @@ const HeaderComponent = ({ minimized = false, user, onLogout }) => {
             <p>
               {user.name} {user.lastname}
             </p>
-            <div className="notification">
-              <NotificacionesIcon />
-            </div>
+            {isProfile && (
+              <div className="notification">
+                <Notifications socket={socket} />
+              </div>
+            )}
             <div className="profile" onClick={toggleMenu}>
               <PerfilIcon />
               {showMenu && (
@@ -64,6 +72,11 @@ HeaderComponent.propTypes = {
   minimized: PropTypes.bool,
   user: PropTypes.object,
   onLogout: PropTypes.func, // Función opcional para manejar el cierre de sesión
+  isProfile: PropTypes.bool,
+  socket: PropTypes.shape({
+    isConnected: PropTypes.bool,
+    socketData: PropTypes.object,
+  }),
 };
 
 export default HeaderComponent;

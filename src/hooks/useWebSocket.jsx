@@ -6,14 +6,15 @@ const useWebSocket = (userId, role) => {
   const [error, setError] = useState(null);
 
   const socketRef = useRef(null);
-  const baseWebSocketUrl = "ws:" + import.meta.env.VITE_BASE_URL + "/websocket"
-
+  const baseWebSocketUrl = "ws:" + import.meta.env.VITE_BASE_URL + "/websocket";
 
   // Función para conectar al WebSocket
   const connect = useCallback(() => {
     if (!userId || !role || isConnected) return;
-
-    const socket = new WebSocket(`${baseWebSocketUrl}?userId=${userId}&role=${role}`);
+    console.log("Conectando al WebSocket...");
+    const socket = new WebSocket(
+      `${baseWebSocketUrl}?userId=${userId}&role=${role}`
+    );
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -52,7 +53,6 @@ const useWebSocket = (userId, role) => {
       // Opcional: Realizar cualquier otra acción si ocurre un error
     }
   }, []);
-  
 
   useEffect(() => {
     // Limpiar conexión al desmontar el componente
