@@ -6,7 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 import ErrorIcon from "@/assets/icons/ErrorIcon";
 
-const MenuContainer = ({ platillos, loading, error, selectedCategory }) => {
+const MenuContainer = ({
+  platillos,
+  loading,
+  error,
+  selectedCategory,
+  isCliente = true,
+  handleSavePlatillo,
+}) => {
   const [filteredPlatillos, setFilteredPlatillos] = useState([]);
 
   useEffect(() => {
@@ -21,38 +28,54 @@ const MenuContainer = ({ platillos, loading, error, selectedCategory }) => {
   }, [platillos, selectedCategory]);
 
   return (
-    <div className="menu-container">
-      {loading && <LoadingIcon />}
-      {error && (
-        <div className="error-msg">
-          <ErrorIcon />
-          <p>Error al cargar platillos: {error.message}</p>
-        </div>
-      )}
-      {!loading && !error && filteredPlatillos.length === 0 && (
-        <p style={{ color: "black" }}>No hay platillos disponibles</p>
-      )}
-      <AnimatePresence mode="wait">
-        <motion.div
-          className="cards"
-          key={selectedCategory}
-          initial={{ x: 300, opacity: 0 }}
-          animate={{
-            x: 0,
-            opacity: 1,
-            transition: { type: "spring", stiffness: 100, damping: 10 },
-          }}
-          exit={{
-            x: -300,
-            opacity: 0,
-            transition: { duration: 0.2 },
-          }}
-        >
-          {filteredPlatillos.map((platillo) => (
-            <CardPlatillo key={platillo.id} platillo={platillo} />
-          ))}
-        </motion.div>
-      </AnimatePresence>
+    <div className="menu">
+      <div className="container-menu">
+        <AnimatePresence mode="wait">
+          <motion.div
+            className="cards"
+            key={selectedCategory}
+            initial={{ x: 300, opacity: 0 }}
+            animate={{
+              x: 0,
+              opacity: 1,
+              transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 10,
+                duration: 0.5,
+                bounce: 0.3,
+              },
+            }}
+            exit={{
+              x: -300,
+              opacity: 0,
+              transition: { duration: 0.2 }, // Transición más rápida y sin rebote
+            }}
+          >
+            {loading ? (
+              <LoadingIcon />
+            ) : (
+              filteredPlatillos.map((platillo) => (
+                <CardPlatillo
+                  key={platillo.id}
+                  platillo={platillo}
+                  isCliente={isCliente}
+                  handleSavePlatillo={handleSavePlatillo}
+                />
+              ))
+            )}
+            {error && (
+              <div className="error-msg">
+                <ErrorIcon />
+                <p>Ha ocurrido un error al cargar los platillos</p>
+              </div>
+            )}
+            {platillos.length === 0 && !loading && !error && (
+              <p style={{ color: "black" }}>No hay platillos disponibles</p>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
@@ -62,6 +85,8 @@ MenuContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   selectedCategory: PropTypes.string.isRequired,
+  isCliente: PropTypes.bool,
+  handleSavePlatillo: PropTypes.func,
 };
 
 export default MenuContainer;

@@ -5,12 +5,17 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import NextIcon from "@/assets/icons/NextIcon";
 
-const CardPlatillo = ({ platillo, isCliente = true }) => {
+const CardPlatillo = ({ platillo, isCliente = true, handleSavePlatillo }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [count, setCount] = useState(0);
 
   const handleCountChange = (newCount) => {
     setCount(newCount);
+  };
+
+  const onClickSavePlatillo = () => {
+    handleSavePlatillo(platillo, count);
+    setCount(0);
   };
 
   return (
@@ -20,7 +25,7 @@ const CardPlatillo = ({ platillo, isCliente = true }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <img src={platillo.img} alt={platillo.name} />
+        <img src={platillo.icon} alt={platillo.name} />
         {isHovered && !isCliente && (
           <div className="overlay-content">
             <div className="counter-container">
@@ -30,7 +35,7 @@ const CardPlatillo = ({ platillo, isCliente = true }) => {
                 onCountChange={handleCountChange}
               />
             </div>
-            <button className="next-icon">
+            <button className="next-icon" onClick={onClickSavePlatillo}>
               <NextIcon />
             </button>
           </div>
@@ -47,6 +52,7 @@ const CardPlatillo = ({ platillo, isCliente = true }) => {
 CardPlatillo.propTypes = {
   platillo: platilloProp,
   isCliente: PropTypes.bool,
+  handleSavePlatillo: PropTypes.func,
 };
 
 export default CardPlatillo;

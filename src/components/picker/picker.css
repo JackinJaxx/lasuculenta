@@ -71,6 +71,11 @@
   stroke: var(--ColorTerracota, #c4753d);
 }
 
+.picker button.selected {
+  border: 3px solid var(--ColorTerracota);
+  color: var(--ColorTerracota, #c4753d);
+}
+
 .icon {
   display: flex;
 }

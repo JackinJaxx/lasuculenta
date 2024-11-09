@@ -8,15 +8,15 @@ import Picker from "@/components/picker/Picker";
 
 const CategoryPicker = ({ selectedCategory, onCategoryChange }) => {
   const options = [
-    { value: 0, label: "Bebidas Calientes", icon: BebidasCalientesIcon },
-    { value: 1, label: "Bebidas Frías", icon: BebidasFriasIcon },
-    { value: 2, label: "Desayunos", icon: DesayunosIcon },
-    { value: 3, label: "Pastelería y Panadería", icon: PasteleriaIcon },
+    { value: "WARM_DRINK", label: "Warm Drink", icon: BebidasCalientesIcon },
+    { value: "COLD_DRINK", label: "Cold Drink", icon: BebidasFriasIcon },
+    { value: "BREAKFAST", label: "Breakfast", icon: DesayunosIcon },
+    { value: "DESSERT", label: "Dessert", icon: PasteleriaIcon },
   ];
 
   return (
     <Picker
-      onChange={(category) => onCategoryChange(category.label)}
+      onChange={(category) => onCategoryChange(category.value)}
       options={options}
       selectedOption={selectedCategory}
     />

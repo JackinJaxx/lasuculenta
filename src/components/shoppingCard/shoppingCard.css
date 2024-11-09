@@ -1,0 +1,141 @@
+/* shoppingCard.css */
+.shopping-card {
+  display: flex;
+  position: fixed;
+  bottom: 30px;
+  right: 93px;
+  background-color: var(--ColorTerracota);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000; /* Asegura que el ícono esté sobre otros elementos */
+
+  transition: box-shadow 0.3s;
+  transition: transform 0.3s;
+}
+
+.shopping-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.shopping-card.expanded {
+  width: 300px; /* Ancho del div expandido */
+  height: 500px; /* Altura del div expandido */
+  border-radius: 20px; /* Esquinas redondeadas del div */
+  background-color: var(--ColorTerracota); /* Color de fondo */
+  transform-origin: bottom right; /* Punto de pivote inferior derecho */
+  transform: scale(1); /* Expande desde la esquina */
+}
+
+.shopping-card-inside {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 40px;
+  background-color: var(--ColorCrema);
+}
+
+.shopping-header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.shopping-header p {
+  color: var(--ColorCafeOscuro);
+  font-family: "Arima Madurai";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  margin: 0;
+  line-height: normal;
+}
+
+.shopping-header input {
+  width: 100%;
+  background: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+  outline: none; /* Sin borde de enfoque */
+  color: var(--ColorCafeOscuro); /* Color del texto al escribir */
+  font-family: "Arima Madurai";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.shopping-minimize {
+  position: fixed;
+  top: 35px;
+}
+
+.shopping-header input::placeholder {
+  color: var(--ColorTerracota); /* Color del placeholder */
+  font-size: 16px; /* Tamaño de la fuente */
+  opacity: 1; /* Mantiene el color completo del placeholder */
+  text-decoration: underline; /* Subraya el placeholder */
+}
+
+.shopping-header input:focus::placeholder {
+  color: transparent; /* Oculta el placeholder cuando está en foco */
+}
+
+.shopping-items {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+  height: 300px;
+  padding: 20px 40px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 20px;
+  border: 3px solid var(--ColorAzulVerdoso);
+  overflow-y: auto; /* Scroll vertical si hay muchos items */
+}
+
+.shopping-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+}
+
+.shopping-item-name {
+  color: var(--ColorOscuro);
+  margin: 0;
+  font-family: Imprima;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.shopping-item-count {
+  color: var(--ColorOscuro);
+  margin: 0;
+  font-family: Grenze;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.shopping-button {
+  display: flex;
+  padding: 5px 30px 5px 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: var(--ColorAzulVerdoso);
+}

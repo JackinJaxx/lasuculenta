@@ -8,15 +8,27 @@ import LoadingIcon from "@/assets/icons/LoadingIcon";
 import ErrorIcon from "@/assets/icons/ErrorIcon";
 import useWebSocket from "@/hooks/useWebSocket";
 import Loader from "@/components/spinner/Spinner";
+import CategoryPicker from "@/components/categoryPicker/CategoryPicker";
+import usePlatillos from "@/hooks/PlatillosService";
+import MenuContainer from "@/components/menuContainer/MenuContainer";
+import ShoppingCard from "@/components/shoppingCard/ShoppingCard";
 
 const WaiterPage = () => {
   const { data: waiters, loading, error, fetchWaiters } = useWaiters();
-  const { data: platillos, loading: platillosLoading, error: platillosError, fetchPlatillos } = usePlatillos();
+  const {
+    data: platillos,
+    loading: loadingPlatillos,
+    error: errorPlatillos,
+    fetchPlatillos,
+  } = usePlatillos();
   const [authState, setAuthState] = useState({
     selectedWaiter: null,
     isLoggedIn: false,
   });
+  const [selectedCategory, setSelectedCategory] = useState("BREAKFAST");
   const [searchText, setSearchText] = useState(""); // Estado para el texto de búsqueda
+
+  const [shoppingCart, setShoppingCart] = useState([]); // Estado para el carrito de compras
 
   const {
     socketData,
@@ -28,6 +40,11 @@ const WaiterPage = () => {
 
   // Verifica el estado de autenticación en localStorage cuando se monta el componente
   // Verificar autenticación en localStorage y manejar errores de parseo
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
   useEffect(() => {
     try {
       const waiterData = localStorage.getItem("loggedWaiter");
@@ -39,6 +56,7 @@ const WaiterPage = () => {
             isLoggedIn: true,
           });
           connect(); // Conectar al WebSocket si ya hay un mesero autenticado
+          fetchPlatillos(); // Cargar la lista de platillos al iniciar sesión
         } else {
           throw new Error("Datos de mesero no válidos en localStorage");
         }
@@ -72,6 +90,7 @@ const WaiterPage = () => {
       );
       setAuthState((prevState) => ({ ...prevState, isLoggedIn: true }));
       connect(); // Conectar al WebSocket después de iniciar sesión
+      fetchPlatillos(); // Cargar la lista de platillos al iniciar sesión
     } catch (e) {
       console.error("Error al guardar el mesero en localStorage:", e);
     }
@@ -108,6 +127,23 @@ const WaiterPage = () => {
       waiter.name.toLowerCase().includes(searchText.toLowerCase()) ||
       waiter.lastname.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const handleSavePlatillo = (platillo, count) => {
+    const platilloIndex = shoppingCart.findIndex(
+      (item) => item.id === platillo.id
+    );
+    if (platilloIndex === -1) {
+      setShoppingCart([...shoppingCart, { ...platillo, count }]);
+    } else {
+      const updatedCart = shoppingCart.map((item) => {
+        if (item.id === platillo.id) {
+          return { ...item, count: item.count + count };
+        }
+        return item;
+      });
+      setShoppingCart(updatedCart);
+    }
+  };
 
   const renderWaitersList = () => {
     return (
@@ -161,7 +197,20 @@ const WaiterPage = () => {
           onLogout={handleLogout}
         />
         {authState.isLoggedIn ? (
-          
+          <>
+            <CategoryPicker
+              selectedCategory={selectedCategory}
+              onCategoryChange={handleCategoryChange}
+            />
+            <MenuContainer
+              platillos={platillos}
+              loading={loadingPlatillos}
+              error={errorPlatillos}
+              selectedCategory={selectedCategory}
+              isCliente={false}
+              handleSavePlatillo={handleSavePlatillo}
+            />
+          </>
         ) : (
           // Contenido cuando el usuario no está logueado, dentro de `menu-container`
           <div className="menu-container">
@@ -179,6 +228,7 @@ const WaiterPage = () => {
         )}
       </div>
       <Loader isLoading={false} />
+      <ShoppingCard platillos={shoppingCart} />
     </>
   );
 };

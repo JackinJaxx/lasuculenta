@@ -1,5 +1,10 @@
 const apiEndpoints = {
-  platillos: "/platillos",
+  platillos: {
+    getAll: "/dish",
+    create: "/platillos",
+    update: (id) => `/platillos/${id}`,
+    delete: (id) => `/platillos/${id}`,
+  },
   bebidas: {
     calientes: "/bebidas/calientes",
     frias: "/bebidas/frias",
