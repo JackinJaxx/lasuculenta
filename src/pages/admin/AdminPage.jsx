@@ -5,12 +5,17 @@ import { useState } from "react";
 
 const AdminPage = () => {
   const [selectedOption, setSelectedOption] = useState({
-    first: "WARM_DRINK",
-    second: "COLD_DRINK",
+    first: "INGREDIENTS",
+    second: "OPERATIONS",
   });
 
   const handleSelectedOption = (category) => {
-    setSelectedOption(category);
+    //ACA se modifica first
+    setSelectedOption({ ...selectedOption, first: category });
+  };
+
+  const handleSelectedSecondOption = (category) => {
+    setSelectedOption({ ...selectedOption, second: category });
   };
 
   return (
@@ -21,6 +26,25 @@ const AdminPage = () => {
           selectedCategory={selectedOption.first}
           onCategoryChange={handleSelectedOption}
         />
+        <div className="admin-page">
+          <div className="admin-container">
+            <div className="admin-picker-secondary">
+              <AdminPicker
+                secondary={true}
+                selectedCategory={selectedOption.second}
+                onCategoryChange={handleSelectedSecondOption}
+              />
+            </div>
+            <div className="admin-content">
+            <div>
+
+            </div>
+            <div>
+              
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

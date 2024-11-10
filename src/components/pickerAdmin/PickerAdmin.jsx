@@ -7,6 +7,10 @@ import PasteleriaIcon from "@/assets/icons/PasteleriaIcon";
 import Picker from "@/components/picker/Picker";
 import WaiterIcon from "@/assets/icons/WaiterIcon";
 import KitchenerIcon from "@/assets/icons/KitchenerIcon";
+import OrdersIcon from "@/assets/icons/OrdersIcon";
+import OperationsIcon from "@/assets/icons/OperationsIcon";
+import ReportsIcon from "@/assets/icons/ReportsIcon";
+import IAIcon from "@/assets/icons/IAIcon";
 
 const AdminPicker = ({
   selectedCategory,
@@ -18,13 +22,19 @@ const AdminPicker = ({
     { value: "DISHES", label: "Dishes", icon: DesayunosIcon },
     { value: "WAITERS", label: "Waiters", icon: WaiterIcon },
     { value: "KITCHENER", label: "Kitchener", icon: KitchenerIcon },
-    {value: "ORDERS", label: "Orders", icon: PasteleriaIcon},
+    { value: "ORDERS", label: "Orders", icon: OrdersIcon },
+  ];
+
+  const secondaryOptions = [
+    { value: "OPERATIONS", label: "Operations", icon: OperationsIcon },
+    { value: "REPORTS", label: "Reports", icon: ReportsIcon },
+    { value: "PREDICTIONS", label: "Predictions", icon: IAIcon },
   ];
 
   return (
     <Picker
       onChange={(category) => onCategoryChange(category.value)}
-      options={options}
+      options={secondary ? secondaryOptions : options}
       selectedOption={selectedCategory}
     />
   );

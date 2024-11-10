@@ -1,0 +1,24 @@
+.admin-page{
+    margin-top: 40px;
+    display: flex;
+    background-color: var(--ColorAzulVerdoso);
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.admin-container{
+    display: flex;
+    background: var(--ColorCrema);
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.admin-picker-secondary{
+    display: flex;
+    width: 100%;
+}
+
+.admin-content{
+    display: flex;
+    width: 100%;
+}

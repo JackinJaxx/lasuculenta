@@ -203,8 +203,8 @@ const KitchenerPage = () => {
 
   const filteredPlatillos = kitchenerDishes.filter(
     (order) =>
-      order.dish.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      order.dish.category.toLowerCase().includes(searchText.toLowerCase())
+      order.dish_dto.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      order.dish_dto.category.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const handleTomarPlatillo = (platillo) => {
@@ -365,7 +365,7 @@ const KitchenerPage = () => {
                                   : ""
                               }`}
                             >
-                              {order.dish.name}
+                              {order.dish_dto.name}
                             </p>
                             <button
                               className={`${
