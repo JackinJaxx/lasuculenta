@@ -8,9 +8,10 @@ import Notifications from "../Notifications/Notifications";
 
 const HeaderComponent = ({
   minimized = false,
-  user,
-  onLogout,
+  user = { name: "", lastname: "" },
+  onLogout = () => {},
   isProfile = true,
+  minimizedProfile = false,
   socket = { isConnected: false, socketData: null, callback: () => {} },
 }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -69,19 +70,22 @@ const HeaderComponent = ({
                 <Notifications
                   newNotification={newNotification}
                   resetNewNotification={resetNewNotification}
+                  admin={user.name === ""}
                 />
               </div>
             )}
-            <div className="profile" onClick={toggleMenu}>
-              <PerfilIcon />
-              {showMenu && (
-                <div className="profile-menu">
-                  <ul>
-                    <li onClick={handleLogout}>Cerrar sesión</li>
-                  </ul>
-                </div>
-              )}
-            </div>
+            {!minimizedProfile && (
+              <div className="profile" onClick={toggleMenu}>
+                <PerfilIcon />
+                {showMenu && (
+                  <div className="profile-menu">
+                    <ul>
+                      <li onClick={handleLogout}>Cerrar sesión</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </>
       ) : (
@@ -101,6 +105,7 @@ HeaderComponent.propTypes = {
     socketData: PropTypes.object,
     callback: PropTypes.func,
   }),
+  minimizedProfile: PropTypes.bool,
 };
 
 export default HeaderComponent;

@@ -5,7 +5,7 @@ import useOrders from "@/hooks/OrderService";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 import Alert from "../alert/AlertCustom";
 
-const Notifications = ({ newNotification, resetNewNotification }) => {
+const Notifications = ({ newNotification, resetNewNotification, admin=false }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
   const { loading, error, getOrdersReady, takeDelivery } = useOrders();
@@ -16,8 +16,8 @@ const Notifications = ({ newNotification, resetNewNotification }) => {
   // Actualiza las notificaciones al montar el componente y cada minuto
   useEffect(() => {
     const fetchNotifications = () => {
-      console.log("Fetching notifications...");
-      getOrdersReady()
+      if(!admin){
+        getOrdersReady()
         .then((newNotifications) => {
           setNotificationCount(newNotifications.length);
           setOrdersReadys(newNotifications);
@@ -25,8 +25,8 @@ const Notifications = ({ newNotification, resetNewNotification }) => {
         .catch((error) => {
           console.error("Error fetching notifications:", error);
         });
+      }
     };
-
     fetchNotifications();
 
     const intervalId = setInterval(fetchNotifications, 60000);
@@ -173,5 +173,6 @@ const Notifications = ({ newNotification, resetNewNotification }) => {
 Notifications.propTypes = {
   newNotification: PropTypes.bool,
   resetNewNotification: PropTypes.func.isRequired,
+  admin: PropTypes.bool,
 };
 export default Notifications;
