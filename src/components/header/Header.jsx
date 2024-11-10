@@ -14,6 +14,7 @@ const HeaderComponent = ({
   socket = { isConnected: false, socketData: null, callback: () => {} },
 }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [newNotification, setNewNotification] = useState(false);
 
   useEffect(() => {
     if (socket.isConnected) {
@@ -21,14 +22,22 @@ const HeaderComponent = ({
       if (socket.socketData && !isProfile) {
         if (socket.socketData.action === "NEW_ORDER") {
           socket.callback();
-        }else{
-          console.log(socket.socketData);
+        }
+      } else if (socket.socketData && isProfile) {
+        if (socket.socketData.action === "FINISH_ORDER") {
+          console.log("Pedido finalizado");
+          socket.callback(socket.socketData.message);
+          setNewNotification(true);
         }
       }
     } else {
       console.log("Conexión cerrada");
     }
   }, [socket.isConnected, socket.socketData]);
+
+  const resetNewNotification = () => {
+    setNewNotification(false);
+  };
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -57,7 +66,10 @@ const HeaderComponent = ({
             </p>
             {isProfile && (
               <div className="notification">
-                <Notifications count={3} />
+                <Notifications
+                  newNotification={newNotification}
+                  resetNewNotification={resetNewNotification}
+                />
               </div>
             )}
             <div className="profile" onClick={toggleMenu}>
@@ -82,7 +94,7 @@ const HeaderComponent = ({
 HeaderComponent.propTypes = {
   minimized: PropTypes.bool,
   user: PropTypes.object,
-  onLogout: PropTypes.func, // Función opcional para manejar el cierre de sesión
+  onLogout: PropTypes.func,
   isProfile: PropTypes.bool,
   socket: PropTypes.shape({
     isConnected: PropTypes.bool,

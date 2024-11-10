@@ -15,6 +15,8 @@ import ShoppingCard from "@/components/shoppingCard/ShoppingCard";
 import ModalTable from "@/components/modal/ModalTable";
 import useOrders from "@/hooks/OrderService";
 import Alert from "@/components/alert/AlertCustom";
+import Helper from "@/components/helper/helper";
+import NotificationFloat from "@/components/Notifications/NotificationFloat";
 
 const WaiterPage = () => {
   const { data: waiters, loading, error, fetchWaiters } = useWaiters();
@@ -36,6 +38,12 @@ const WaiterPage = () => {
     selectedWaiter: null,
     isLoggedIn: false,
   });
+
+  const [notification, setNotification] = useState({
+    isVisible: false,
+    message: "",
+  });
+
   const [selectedCategory, setSelectedCategory] = useState("BREAKFAST");
   const [searchText, setSearchText] = useState(""); // Estado para el texto de búsqueda
 
@@ -72,6 +80,7 @@ const WaiterPage = () => {
             selectedWaiter: parsedWaiter,
             isLoggedIn: true,
           });
+        } else {
           throw new Error("Datos de mesero no válidos en localStorage");
         }
       } else {
@@ -104,7 +113,7 @@ const WaiterPage = () => {
         return;
       }
       connect(); // Conectar al WebSocket
-      fetchPlatillos(); // Cargar la lista de platillos al iniciar sesión
+      fetchPlatillos();
     }
   }, [authState.isLoggedIn, authState.selectedWaiter]);
 
@@ -288,6 +297,8 @@ const WaiterPage = () => {
           socket={{
             isConnected,
             socketData,
+            callback: () =>
+              setNotification({ isVisible: true, message: "Nuevo pedido" }),
           }}
         />
         {authState.isLoggedIn ? (
@@ -321,7 +332,12 @@ const WaiterPage = () => {
           </div>
         )}
       </div>
+      <Helper />
       <Loader isLoading={loadingOrder} />
+      <NotificationFloat
+        isVisible={notification.isVisible}
+        message={notification.message}
+      />
       {isConnected && (
         <ShoppingCard
           platillos={shoppingCart}

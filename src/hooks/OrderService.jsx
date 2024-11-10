@@ -40,6 +40,42 @@ const useOrders = () => {
     }
   };
 
+  const getOrdersReady = () => {
+    setLoading(true);
+    setError(null);
+
+    return fetchData(baseUrl + apiEndpoints.orders.getOrdersReady)
+      .then((response) => {
+        return response.content; // Resuelve la promesa con la respuesta
+      })
+      .catch((error) => {
+        return Promise.reject(error); // Rechaza la promesa con el error
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const takeDelivery = (order) => {
+    setLoading(true);
+    setError(null);
+
+    return fetchData(baseUrl + apiEndpoints.orders.takeDelivery, {
+      method: "PUT",
+      body: order,
+    })
+      .then((response) => {
+        return response; // Resuelve la promesa con la respuesta
+      })
+      .catch((error) => {
+        setError(error);
+        return Promise.reject(error); // Rechaza la promesa con el error
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const takePlatlloByFilter = (filter) => {
     setLoading(true);
     setError(null);
@@ -131,6 +167,8 @@ const useOrders = () => {
     takePlatllo,
     takePlatlloByFilter,
     completePlatllo,
+    getOrdersReady,
+    takeDelivery,
   };
 };
 

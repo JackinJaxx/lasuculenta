@@ -14,10 +14,12 @@ const apiEndpoints = {
   orders: {
     getAll: "/order",
     getOrdersToMade: "/order/to-made",
+    getOrdersReady: "/order/ready",
+    takeDelivery: "/order/deliver",
     takePlatllo: "/order/assign",
     finishPlatllo: "/order/finish",
     create: "/order",
-    filter : "/order/filter",
+    filter: "/order/filter",
   },
   kitcheners: {
     getAll: "/kitchener",

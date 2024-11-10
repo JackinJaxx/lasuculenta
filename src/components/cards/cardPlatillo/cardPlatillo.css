@@ -14,7 +14,6 @@
   border: 8px solid var(--ColorCafeOscuro);
   overflow: hidden;
   cursor: pointer;
-  position: relative;
 }
 
 .img-container:hover {

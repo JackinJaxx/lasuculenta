@@ -6,7 +6,7 @@
   right: 93px;
   background-color: var(--ColorTerracota);
   border-radius: 20px;
-  padding: 20px;
+  padding: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1000; /* Asegura que el ícono esté sobre otros elementos */

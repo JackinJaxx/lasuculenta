@@ -1,0 +1,81 @@
+.notification-float {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 10px;
+  width: 100%;
+  gap: 10px;
+  max-width: 320px;
+  height: 80px;
+  position: fixed;
+  top: 34px;
+  right: 93px;
+  background-color: var(--ColorTerracota);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0; /* Oculto inicialmente para animación */
+}
+
+.notification-float.slide-in {
+  animation: slideIn 0.5s forwards;
+}
+
+.notification-float.slide-out {
+  animation: slideOut 0.5s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%); /* Aparece desde la derecha */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0); /* Llega a su posición original */
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0); /* Comienza en su posición original */
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%); /* Sale hacia la derecha */
+    opacity: 0;
+  }
+}
+
+.notification-icon {
+  display: flex;
+}
+
+.notification-content {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.notification-content p {
+  margin: 0;
+}
+
+.notification-close {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-radius: 50%;
+}
+
+.notification-close:hover {
+  background: var(--ColorCrema);
+}
+
+.notification-close:hover > svg {
+  color: var(--ColorCafeOscuro);
+  transition: color 0.3s;
+}

@@ -10,6 +10,7 @@ import SearchBar from "@/components/search/Search";
 import PerfilIcon from "@/assets/icons/PerfilIcon";
 import useOrders from "@/hooks/OrderService";
 import Alert from "@/components/alert/AlertCustom";
+import Helper from "@/components/helper/helper";
 
 const KitchenerPage = () => {
   const { data: kitcheners, loading, error, fetchKitcheners } = useKitchener();
@@ -45,7 +46,6 @@ const KitchenerPage = () => {
     try {
       const kitchenerData = localStorage.getItem("loggedKitchener");
       //remover waiter
-      localStorage.removeItem("loggedWaiter");
       if (kitchenerData) {
         const parsedKitchener = JSON.parse(kitchenerData);
         if (parsedKitchener && parsedKitchener.id) {
@@ -229,14 +229,15 @@ const KitchenerPage = () => {
           .then((data) => {
             setKitchenerDishes(data.content);
             Alert.success("Exito", "Platillo tomado");
+            getOrdeToMade();
           })
           .catch(() => {
             Alert.error(
               "Error",
               "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
             );
+            getOrdeToMade();
           });
-        getOrdeToMade();
       })
       .catch(() => {
         Alert.error("Error", "No se pudo enviar el pedido");
@@ -254,7 +255,25 @@ const KitchenerPage = () => {
           socket={{
             isConnected,
             socketData,
-            callback: getOrdeToMade,
+            callback: () => {
+              takePlatlloByFilter({
+                process: "GETTING_READY",
+                kitchener: {
+                  id: authState.selectedKitchener.id,
+                },
+              })
+                .then((data) => {
+                  setKitchenerDishes(data.content);
+                  getOrdeToMade();
+                })
+                .catch(() => {
+                  Alert.error(
+                    "Error",
+                    "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
+                  );
+                  getOrdeToMade();
+                });
+            },
           }}
         />
         <div className="menu-container">
@@ -367,6 +386,7 @@ const KitchenerPage = () => {
           )}
         </div>
       </div>
+      <Helper />
       <Loader isLoading={false} />
     </>
   );

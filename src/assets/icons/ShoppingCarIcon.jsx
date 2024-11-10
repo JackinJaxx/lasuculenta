@@ -2,8 +2,8 @@ const ShoppingCardIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="50"
-      height="50"
+      width="48"
+      height="48"
       viewBox="0 0 24 24"
       color="#F0E5CF"
     >
