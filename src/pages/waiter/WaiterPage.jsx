@@ -322,11 +322,13 @@ const WaiterPage = () => {
         )}
       </div>
       <Loader isLoading={loadingOrder} />
-      <ShoppingCard
-        platillos={shoppingCart}
-        beforeExpand={beforeExpand}
-        handleSendOrder={handleSendOrder}
-      />
+      {isConnected && (
+        <ShoppingCard
+          platillos={shoppingCart}
+          beforeExpand={beforeExpand}
+          handleSendOrder={handleSendOrder}
+        />
+      )}
       <ModalTable isVisible={showTablePopup} handlers={popupHandlers} />
     </>
   );

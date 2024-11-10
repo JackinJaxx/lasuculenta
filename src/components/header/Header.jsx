@@ -11,13 +11,24 @@ const HeaderComponent = ({
   user,
   onLogout,
   isProfile = true,
-  socket,
+  socket = { isConnected: false, socketData: null, callback: () => {} },
 }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
-    console.log("User changed", user);
-  }, [user, minimized]);
+    if (socket.isConnected) {
+      console.log("Conexión establecida");
+      if (socket.socketData && !isProfile) {
+        if (socket.socketData.action === "NEW_ORDER") {
+          socket.callback();
+        }else{
+          console.log(socket.socketData);
+        }
+      }
+    } else {
+      console.log("Conexión cerrada");
+    }
+  }, [socket.isConnected, socket.socketData]);
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -46,7 +57,7 @@ const HeaderComponent = ({
             </p>
             {isProfile && (
               <div className="notification">
-                <Notifications socket={socket} />
+                <Notifications count={3} />
               </div>
             )}
             <div className="profile" onClick={toggleMenu}>
@@ -76,6 +87,7 @@ HeaderComponent.propTypes = {
   socket: PropTypes.shape({
     isConnected: PropTypes.bool,
     socketData: PropTypes.object,
+    callback: PropTypes.func,
   }),
 };
 

@@ -2,19 +2,13 @@ import { useEffect, useState } from "react";
 import "./notifications.css";
 import PropTypes from "prop-types";
 
-const Notifications = ({ socket }) => {
-  const [notificationCount, setNotificationCount] = useState(1);
-
+const Notifications = ({ count }) => {
+  const [notificationCount, setNotificationCount] = useState(0);
   useEffect(() => {
-    if (socket.isConnected) {
-      console.log("Conexión establecida");
-      if (socket.socketData) {
-        console.log("Datos del WebSocket", socket.socketData);
-      }
-    } else {
-      console.log("Conexión cerrada");
+    if (count) {
+      setNotificationCount(count);
     }
-  }, [socket.isConnected, socket.socketData]);
+  }, [count]);
   return (
     <div className="notification-icon">
       <svg
@@ -61,9 +55,6 @@ const Notifications = ({ socket }) => {
 };
 
 Notifications.propTypes = {
-  socket: PropTypes.shape({
-    isConnected: PropTypes.bool,
-    socketData: PropTypes.object,
-  }),
+  count: PropTypes.number,
 };
 export default Notifications;

@@ -17,8 +17,7 @@ const apiEndpoints = {
     takePlatllo: "/order/assign",
     finishPlatllo: "/order/finish",
     create: "/order",
-    update: (id) => `/order/${id}`,
-    delete: (id) => `/order/${id}`,
+    filter : "/order/filter",
   },
   kitcheners: {
     getAll: "/kitchener",

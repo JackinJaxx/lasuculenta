@@ -55,6 +55,11 @@
   cursor: pointer;
 }
 
+.platillo-waiting-ready {
+  background: var(--ColorTerracota);
+  border: none;
+}
+
 .platillo-waiting:hover {
   background: var(--ColorTerracota);
   border: none;
@@ -65,11 +70,20 @@
   color: var(--ColorCrema) !important;
 }
 
+.platillo-p-ready{
+  color: var(--ColorCrema) !important;
+}
+
+.platillo-b-ready{
+  color: var(--ColorCrema) !important;
+  border: 1px solid var(--ColorCrema) !important;
+}
+
 .platillo-waiting:hover button {
   border: 1px solid var(--ColorCrema);
 }
 .platillo-waiting p {
-  color: var(--ColorCafeOscuro) !important;
+  color: var(--ColorCafeOscuro);
   margin: 0;
   /* Logo */
   font-family: JejuMyeongjo !important;

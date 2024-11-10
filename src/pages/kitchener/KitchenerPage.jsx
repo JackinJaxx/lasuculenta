@@ -1,6 +1,6 @@
 import useKitchener from "@/hooks/KitchenerService";
 import "./kitchener.css";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useWebSocket from "@/hooks/useWebSocket";
 import HeaderComponent from "@/components/header/Header";
 import ErrorIcon from "@/assets/icons/ErrorIcon";
@@ -9,6 +9,7 @@ import Loader from "@/components/spinner/Spinner";
 import SearchBar from "@/components/search/Search";
 import PerfilIcon from "@/assets/icons/PerfilIcon";
 import useOrders from "@/hooks/OrderService";
+import Alert from "@/components/alert/AlertCustom";
 
 const KitchenerPage = () => {
   const { data: kitcheners, loading, error, fetchKitcheners } = useKitchener();
@@ -18,11 +19,14 @@ const KitchenerPage = () => {
     error: errorOrders,
     getOrdeToMade,
     takePlatllo,
+    takePlatlloByFilter,
   } = useOrders();
   const [authState, setAuthState] = useState({
     selectedKitchener: null,
     isLoggedIn: false,
   });
+
+  const [kitchenerDishes, setKitchenerDishes] = useState([]);
 
   const [searchText, setSearchText] = useState(""); // Estado para el texto de búsqueda
 
@@ -62,6 +66,48 @@ const KitchenerPage = () => {
   }, []);
 
   useEffect(() => {
+    // Verifica que `orders.content` esté definido
+    if (orders?.content) {
+      console.log("Ordenes", orders.content);
+      console.log("Platillos", kitchenerDishes);
+      setKitchenerDishes((prevDishes) => {
+        // Filtra los nuevos platillos que no están en `prevDishes`
+        const newDishes = orders.content;
+
+        // Si hay nuevos platillos, agrégalos; si no, devuelve el array actual
+        return newDishes.length > 0
+          ? [...prevDishes, ...newDishes]
+          : prevDishes;
+      });
+    }
+  }, [orders]);
+
+  useEffect(() => {
+    if (kitchenerDishes.length > 0) {
+      const applyFlexWrap = () => {
+        const platilloItems = document.querySelectorAll(".platillo-waiting");
+
+        platilloItems.forEach((item) => {
+          const pElement = item.querySelector("p");
+          if (pElement && pElement.offsetWidth > 130) {
+            item.style.flexWrap = "wrap"; // Cambia a wrap si el ancho de <p> supera 129px
+            pElement.style.flex = "1";
+            item.style.justifyContent = "flex-end";
+          } else {
+            item.style.flexWrap = "nowrap"; // Mantenlo en nowrap si no lo supera
+          }
+        });
+      };
+
+      // Aplica el estilo una vez al montar el componente
+      applyFlexWrap();
+
+      // Agrega un event listener para ajustar al cambiar el tamaño de la ventana
+      window.addEventListener("resize", applyFlexWrap);
+    }
+  }, [kitchenerDishes]);
+
+  useEffect(() => {
     if (errorSocket) {
       console.error("Error en el WebSocket:", errorSocket);
       handleLogout(); // Cierra la sesión y desconecta el WebSocket si hay error
@@ -85,7 +131,20 @@ const KitchenerPage = () => {
         return;
       }
       connect(); // Conectar al WebSocket
-      getOrdeToMade(); // Cargar órdenes
+      takePlatlloByFilter({
+        process: "GETTING_READY",
+        kitchener: {
+          id: authState.selectedKitchener.id,
+        },
+      })
+        .then((data) => {
+          setKitchenerDishes(data.content);
+          getOrdeToMade(); // Cargar órdenes
+        })
+        .catch(() => {
+          Alert.error("Error", "Ha ocurrido un error, se recargara la pagina");
+          setAuthState({ selectedKitchener: null, isLoggedIn: false });
+        });
     }
   }, [authState.isLoggedIn, authState.selectedKitchener]);
 
@@ -141,7 +200,7 @@ const KitchenerPage = () => {
       kitchener.lastname.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const filteredPlatillos = orders.filter(
+  const filteredPlatillos = kitchenerDishes.filter(
     (order) =>
       order.dish.name.toLowerCase().includes(searchText.toLowerCase()) ||
       order.dish.category.toLowerCase().includes(searchText.toLowerCase())
@@ -149,13 +208,39 @@ const KitchenerPage = () => {
 
   const handleTomarPlatillo = (platillo) => {
     // Manejar la acción de tomar un platillo
-    // takePlatllo([
-    //   {
-    //     order: {
-    //       id:
-    //     }
-    //   }
-    // ])
+    takePlatllo([
+      {
+        order: {
+          id: platillo.order_id,
+        },
+        cns: platillo.cns,
+        madeBy: {
+          id: authState.selectedKitchener.id,
+        },
+      },
+    ])
+      .then(() => {
+        takePlatlloByFilter({
+          process: "GETTING_READY",
+          kitchener: {
+            id: authState.selectedKitchener.id,
+          },
+        })
+          .then((data) => {
+            setKitchenerDishes(data.content);
+            Alert.success("Exito", "Platillo tomado");
+          })
+          .catch(() => {
+            Alert.error(
+              "Error",
+              "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
+            );
+          });
+        getOrdeToMade();
+      })
+      .catch(() => {
+        Alert.error("Error", "No se pudo enviar el pedido");
+      });
   };
 
   return (
@@ -166,6 +251,11 @@ const KitchenerPage = () => {
           user={authState.selectedKitchener}
           onLogout={handleLogout}
           isProfile={false}
+          socket={{
+            isConnected,
+            socketData,
+            callback: getOrdeToMade,
+          }}
         />
         <div className="menu-container">
           {error || errorOrders ? (
@@ -199,16 +289,41 @@ const KitchenerPage = () => {
                   </div>
                   {authState.isLoggedIn ? (
                     <div className="platillos-container">
-                      {filteredPlatillos.map((order, index) => (
-                        <div className="platillo-waiting" key={index}>
-                          <p>{order.dish.name}</p>
-                          <button onClick={handleTomarPlatillo(order)}>
-                            {order.current_process === "WAITING_KITCHENER"
-                              ? "Tomar"
-                              : "Completar"}
-                          </button>
-                        </div>
-                      ))}
+                      {filteredPlatillos.map((order, index) => {
+                        console.log(order);
+                        return (
+                          <div
+                            className={`platillo-waiting ${
+                              order.currentProcess !== "WAITING_KITCHENER"
+                                ? "platillo-waiting-ready"
+                                : ""
+                            }`}
+                            key={index}
+                          >
+                            <p
+                              className={`${
+                                order.currentProcess !== "WAITING_KITCHENER"
+                                  ? "platillo-p-ready"
+                                  : ""
+                              }`}
+                            >
+                              {order.dish.name}
+                            </p>
+                            <button
+                              className={`${
+                                order.currentProcess !== "WAITING_KITCHENER"
+                                  ? "platillo-b-ready"
+                                  : ""
+                              }`}
+                              onClick={() => handleTomarPlatillo(order)}
+                            >
+                              {order.currentProcess === "WAITING_KITCHENER"
+                                ? "Tomar"
+                                : "Completar"}
+                            </button>
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     <>
