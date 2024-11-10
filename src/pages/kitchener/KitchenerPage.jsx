@@ -21,6 +21,7 @@ const KitchenerPage = () => {
     getOrdeToMade,
     takePlatllo,
     takePlatlloByFilter,
+    completePlatllo,
   } = useOrders();
   const [authState, setAuthState] = useState({
     selectedKitchener: null,
@@ -244,6 +245,44 @@ const KitchenerPage = () => {
       });
   };
 
+  const handleFinishPlatillo = (platillo) => {
+    // Manejar la acción de tomar un platillo
+    completePlatllo([
+      {
+        order: {
+          id: platillo.order_id,
+        },
+        cns: platillo.cns,
+        madeBy: {
+          id: authState.selectedKitchener.id,
+        },
+      },
+    ])
+      .then(() => {
+        takePlatlloByFilter({
+          process: "GETTING_READY",
+          kitchener: {
+            id: authState.selectedKitchener.id,
+          },
+        })
+          .then((data) => {
+            setKitchenerDishes(data.content);
+            Alert.success("Exito", "Platillo tomado");
+            getOrdeToMade();
+          })
+          .catch(() => {
+            Alert.error(
+              "Error",
+              "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
+            );
+            getOrdeToMade();
+          });
+      })
+      .catch(() => {
+        Alert.error("Error", "No se pudo enviar el pedido");
+      });
+  };
+
   return (
     <>
       <div className="waiter-page">
@@ -334,7 +373,15 @@ const KitchenerPage = () => {
                                   ? "platillo-b-ready"
                                   : ""
                               }`}
-                              onClick={() => handleTomarPlatillo(order)}
+                              onClick={() => {
+                                if (
+                                  order.currentProcess === "WAITING_KITCHENER"
+                                ) {
+                                  handleTomarPlatillo(order);
+                                } else {
+                                  handleFinishPlatillo(order);
+                                }
+                              }}
                             >
                               {order.currentProcess === "WAITING_KITCHENER"
                                 ? "Tomar"

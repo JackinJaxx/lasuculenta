@@ -1,6 +1,6 @@
 const fetchData = async (
   url,
-  { method = "GET", headers = {}, body = null, expectJson = true, timeout = 4000 } = {} // Agregamos el parámetro timeout en milisegundos
+  { method = "GET", headers = {}, body = null, expectJson = true, timeout = 8000 } = {} // Agregamos el parámetro timeout en milisegundos
 ) => {
   const options = {
     method,

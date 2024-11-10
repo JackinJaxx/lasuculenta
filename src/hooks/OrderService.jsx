@@ -43,7 +43,7 @@ const useOrders = () => {
   const getOrdersReady = () => {
     setLoading(true);
     setError(null);
-
+    console.log("Fetching orders ready...");
     return fetchData(baseUrl + apiEndpoints.orders.getOrdersReady)
       .then((response) => {
         return response.content; // Resuelve la promesa con la respuesta
@@ -57,6 +57,7 @@ const useOrders = () => {
   };
 
   const takeDelivery = (order) => {
+
     setLoading(true);
     setError(null);
 
@@ -74,7 +75,7 @@ const useOrders = () => {
       .finally(() => {
         setLoading(false);
       });
-  };
+  }
 
   const takePlatlloByFilter = (filter) => {
     setLoading(true);

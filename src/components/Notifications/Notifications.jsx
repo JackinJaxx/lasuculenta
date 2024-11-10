@@ -19,7 +19,6 @@ const Notifications = ({ newNotification, resetNewNotification }) => {
       console.log("Fetching notifications...");
       getOrdersReady()
         .then((newNotifications) => {
-          console.log("Notifications fetched:", newNotifications);
           setNotificationCount(newNotifications.length);
           setOrdersReadys(newNotifications);
         })
@@ -27,9 +26,10 @@ const Notifications = ({ newNotification, resetNewNotification }) => {
           console.error("Error fetching notifications:", error);
         });
     };
+
     fetchNotifications();
 
-    const intervalId = setInterval(fetchNotifications, 160000);
+    const intervalId = setInterval(fetchNotifications, 60000);
     return () => clearInterval(intervalId);
   }, []);
 

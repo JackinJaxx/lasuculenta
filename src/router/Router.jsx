@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import AdminPage from "@/pages/AdminPage";
+import AdminPage from "@/pages/admin/AdminPage";
 import CustomerPage from "@/pages/customer/CustomerPage";
 import KitchenerPage from "@/pages/kitchener/KitchenerPage";
 import UnauthorizedPage from "@/pages/UnauthorizedPage";
