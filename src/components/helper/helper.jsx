@@ -39,7 +39,7 @@ const Helper = ({ icon, view, aligment = "left", onAdminAction }) => {
 };
 
 Helper.propTypes = {
-  icon: PropTypes.elementType,
+  icon: PropTypes.element,
   view: PropTypes.string,
   aligment: PropTypes.string,
   onAdminAction: PropTypes.func,

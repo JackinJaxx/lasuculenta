@@ -21,7 +21,7 @@ const PredictionComponent = () => {
   };
   return (
     <div className="ingredeint-operation">
-      <p>Predictions</p>
+      <p>Prediction</p>
       <div className="admin-predictions">
         <TextField
           type="date"

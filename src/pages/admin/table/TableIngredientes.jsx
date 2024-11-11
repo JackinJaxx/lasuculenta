@@ -16,8 +16,8 @@ const columns = [
   {
     id: "cost",
     label: "Cost",
-    minWidth: 170,
-    align: "right",
+    minWidth: 100,
+    align: "center",
     //FORMATO DE MONEDA
     format: (value) => `$${value.toFixed(2)}`,
   },
@@ -25,13 +25,13 @@ const columns = [
     id: "unit",
     label: "Unit",
     minWidth: 100,
-    align: "right",
+    align: "center",
   },
   {
     id: "stock",
     label: "Stock",
     minWidth: 100,
-    align: "right",
+    align: "center",
     format: (value) => value.toFixed(2),
   },
 ];

@@ -1,7 +1,7 @@
 import HeaderComponent from "@/components/header/Header";
 import "./adminPage.css";
 import AdminPicker from "@/components/pickerAdmin/PickerAdmin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableIngredient from "./table/TableIngredientes";
 import TableDishes from "./table/TableDishes";
 import TableWaiters from "./table/TableWaiter";
@@ -16,6 +16,8 @@ import Alert from "@/components/alert/AlertCustom";
 import TablePrediction from "./table/TablePrediction";
 import PredictionComponent from "./prediction/PredictionComponent";
 import Helper from "@/components/helper/helper";
+import IngredientsOperations from "./ingredients/IngredientesOperations";
+import NotificationFloat from "@/components/Notifications/NotificationFloat";
 
 const AdminPage = () => {
   const [selectedOption, setSelectedOption] = useState({
@@ -23,7 +25,10 @@ const AdminPage = () => {
     second: "OPERATIONS",
   });
 
- 
+  const [notification, setNotification] = useState({
+    isVisible: false,
+    message: "",
+  });
 
   const handleSelectedOption = (category) => {
     setSelectedOption({
@@ -53,24 +58,26 @@ const AdminPage = () => {
     ];
   };
 
+  useEffect(() => {
+    if (selectedOption.first === "INGREDIENTS" && selectedOption.second === "PREDICTIONS") {
+      setNotification({
+        isVisible: true,
+        message: "Please select a date to generate a prediction based on it.",
+      });
+    } else {
+      setNotification({ isVisible: false, message: "" });
+    }
+  }, [selectedOption]);
+
   const renderContent = () => {
     const { first, second } = selectedOption;
 
     if (first === "INGREDIENTS" && second === "OPERATIONS") {
-      return (
-        <div className="ingredeint-operation">
-          <div>OPERACIONES</div>
-          <div className="admin-table">
-            <TableIngredient />
-          </div>
-        </div>
-      );
+      return <IngredientsOperations />;
     }
 
     if (first === "INGREDIENTS" && second === "PREDICTIONS") {
-      return (
-        <PredictionComponent />
-      );
+      return <PredictionComponent />;
     }
 
     if (first === "DISHES" && second === "OPERATIONS") {
@@ -142,7 +149,18 @@ const AdminPage = () => {
             <div className="admin-content">{renderContent()}</div>
           </div>
         </div>
-        <Helper icon={<IAIcon/>} view="admin" aligment="right" />
+        <Helper
+          icon=<IAIcon />
+          view="admin"
+          aligment="right"
+          onAdminAction={() =>
+            setSelectedOption({ first: "INGREDIENTS", second: "PREDICTIONS" })
+          }
+        />
+        <NotificationFloat
+          isVisible={notification.isVisible}
+          message={notification.message}
+        />
       </div>
     </>
   );
