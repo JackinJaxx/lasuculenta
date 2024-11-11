@@ -1,10 +1,7 @@
-// components/CategoryPicker.js
 import PropTypes from "prop-types";
-import BebidasCalientesIcon from "@/assets/icons/BebidasCalientesIcon";
-import BebidasFriasIcon from "@/assets/icons/BebidasFriasIcon";
-import DesayunosIcon from "@/assets/icons/DesayunosIcon";
-import PasteleriaIcon from "@/assets/icons/PasteleriaIcon";
 import Picker from "@/components/picker/Picker";
+import PasteleriaIcon from "@/assets/icons/PasteleriaIcon";
+import DesayunosIcon from "@/assets/icons/DesayunosIcon";
 import WaiterIcon from "@/assets/icons/WaiterIcon";
 import KitchenerIcon from "@/assets/icons/KitchenerIcon";
 import OrdersIcon from "@/assets/icons/OrdersIcon";
@@ -16,8 +13,9 @@ const AdminPicker = ({
   selectedCategory,
   onCategoryChange,
   secondary = false,
+  options,
 }) => {
-  const options = [
+  const primaryOptions = [
     { value: "INGREDIENTS", label: "Ingredients", icon: PasteleriaIcon },
     { value: "DISHES", label: "Dishes", icon: DesayunosIcon },
     { value: "WAITERS", label: "Waiters", icon: WaiterIcon },
@@ -25,16 +23,13 @@ const AdminPicker = ({
     { value: "ORDERS", label: "Orders", icon: OrdersIcon },
   ];
 
-  const secondaryOptions = [
-    { value: "OPERATIONS", label: "Operations", icon: OperationsIcon },
-    { value: "REPORTS", label: "Reports", icon: ReportsIcon },
-    { value: "PREDICTIONS", label: "Predictions", icon: IAIcon },
-  ];
+  // Usa las opciones que se pasan como prop para el Picker secundario
+  const pickerOptions = secondary ? options : primaryOptions;
 
   return (
     <Picker
       onChange={(category) => onCategoryChange(category.value)}
-      options={secondary ? secondaryOptions : options}
+      options={pickerOptions}
       selectedOption={selectedCategory}
     />
   );
@@ -44,6 +39,7 @@ AdminPicker.propTypes = {
   selectedCategory: PropTypes.string.isRequired,
   onCategoryChange: PropTypes.func.isRequired,
   secondary: PropTypes.bool,
+  options: PropTypes.array, // Se asegura que las opciones se pasen al Picker
 };
 
 export default AdminPicker;

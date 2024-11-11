@@ -1,24 +1,75 @@
-.admin-page{
-    margin-top: 40px;
-    display: flex;
-    background-color: var(--ColorAzulVerdoso);
-    padding: 40px;
-    border-radius: 20px;
+.admin-page {
+  margin-top: 40px;
+  display: flex;
+  background-color: var(--ColorAzulVerdoso);
+  padding: 40px;
+  border-radius: 20px;
 }
 
-.admin-container{
-    display: flex;
-    background: var(--ColorCrema);
-    border-radius: 20px;
-    flex-direction: column;
+.admin-container {
+  display: flex;
+  background: var(--ColorCrema);
+  border-radius: 20px;
+  flex-direction: column;
 }
 
-.admin-picker-secondary{
-    display: flex;
-    width: 100%;
+.admin-picker-secondary {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
 }
 
-.admin-content{
-    display: flex;
-    width: 100%;
+.admin-content {
+  display: flex;
+  box-sizing: border-box;
+  min-width: 1000px;
+  min-height: 240px;
+  width: 100%;
+  flex-direction: column;
+  padding: 20px 80px;
+}
+
+.ingredeint-operation {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.admin-table {
+  display: flex;
+  width: 100%;
+}
+
+.ingredeint-operation > p {
+  color: var(--ColorOscuro);
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  /* Headers */
+  font-family: "Arima Madurai";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 91.667% */
+}
+
+.admin-predictions{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+.btn-predictions{
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ColorAzulVerdoso);
+  color: var(--ColorCrema);
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: "Arima Madurai";
+  font-size: 23px;
+  cursor: pointer;
 }

@@ -1,9 +1,16 @@
 const apiEndpoints = {
   platillos: {
     getAll: "/dish",
-    create: "/platillos",
+    create: "/dish",
     update: (id) => `/platillos/${id}`,
     delete: (id) => `/platillos/${id}`,
+  },
+  ingredient:{
+    getAll: "/ingredient",
+    predict: "/ingredient/predict",
+    create: "/ingredient",
+    update: (id) => `/ingredient/${id}`,
+    delete: (id) => `/ingredient/${id}`,
   },
   waiters: {
     getAll: "/waiter",
@@ -12,7 +19,7 @@ const apiEndpoints = {
     delete: (id) => `/waiter/${id}`,
   },
   orders: {
-    getAll: "/order",
+    getAll: "/order/pages",
     getOrdersToMade: "/order/to-made",
     getOrdersReady: "/order/ready",
     takeDelivery: "/order/deliver",

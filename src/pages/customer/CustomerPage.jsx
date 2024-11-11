@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import usePlatillos from "@/hooks/PlatillosService";
 import CategoryPicker from "@/components/categoryPicker/CategoryPicker";
 import MenuContainer from "@/components/menuContainer/MenuContainer";
+import Helper from "@/components/helper/helper";
+import HelperIcon from "@/assets/icons/HelperIcon";
 
 const CustomerPage = () => {
   const { data: platillos, loading, error, fetchPlatillos } = usePlatillos(); // Usa el hook para obtener platillos
@@ -30,6 +32,7 @@ const CustomerPage = () => {
         error={error}
         selectedCategory={selectedCategory}
       />
+      <Helper icon={<HelperIcon />} view="customer" />
     </div>
   );
 };

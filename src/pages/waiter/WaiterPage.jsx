@@ -17,6 +17,7 @@ import useOrders from "@/hooks/OrderService";
 import Alert from "@/components/alert/AlertCustom";
 import Helper from "@/components/helper/helper";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
+import HelperIcon from "@/assets/icons/HelperIcon";
 
 const WaiterPage = () => {
   const { data: waiters, loading, error, fetchWaiters } = useWaiters();
@@ -332,7 +333,7 @@ const WaiterPage = () => {
           </div>
         )}
       </div>
-      <Helper />
+      <Helper icon={<HelperIcon />} view="waiter" />
       <Loader isLoading={loadingOrder} />
       <NotificationFloat
         isVisible={notification.isVisible}

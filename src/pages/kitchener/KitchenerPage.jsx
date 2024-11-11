@@ -11,6 +11,7 @@ import PerfilIcon from "@/assets/icons/PerfilIcon";
 import useOrders from "@/hooks/OrderService";
 import Alert from "@/components/alert/AlertCustom";
 import Helper from "@/components/helper/helper";
+import HelperIcon from "@/assets/icons/HelperIcon";
 
 const KitchenerPage = () => {
   const { data: kitcheners, loading, error, fetchKitcheners } = useKitchener();
@@ -433,7 +434,7 @@ const KitchenerPage = () => {
           )}
         </div>
       </div>
-      <Helper />
+      <Helper icon={<HelperIcon />} view="kitchener" />
       <Loader isLoading={false} />
     </>
   );

@@ -10,12 +10,14 @@ const useOrders = () => {
   // URL base de la API
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (size, page) => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await fetchData(baseUrl + apiEndpoints.orders.getAll);
+      const data = await fetchData(
+        baseUrl + apiEndpoints.orders.getAll + `?size=${size}&page=${page}`
+      );
       setData(data);
     } catch (error) {
       setError(error);
@@ -57,7 +59,6 @@ const useOrders = () => {
   };
 
   const takeDelivery = (order) => {
-
     setLoading(true);
     setError(null);
 
@@ -75,7 +76,7 @@ const useOrders = () => {
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   const takePlatlloByFilter = (filter) => {
     setLoading(true);
