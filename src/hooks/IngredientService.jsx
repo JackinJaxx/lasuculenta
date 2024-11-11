@@ -56,6 +56,21 @@ const useIngredient = () => {
     }
   };
 
+  const deleteIngredient = async (id) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchData(baseUrl + apiEndpoints.ingredient.delete(id), {
+        method: "DELETE",
+      });
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     data,
     loading,

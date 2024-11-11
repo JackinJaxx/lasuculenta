@@ -24,14 +24,15 @@ const KitchenerPage = () => {
     takePlatlloByFilter,
     completePlatllo,
   } = useOrders();
-  const [authState, setAuthState] = useState({
-    selectedKitchener: null,
-    isLoggedIn: false,
-  });
 
   const [kitchenerDishes, setKitchenerDishes] = useState([]);
 
   const [searchText, setSearchText] = useState(""); // Estado para el texto de búsqueda
+
+  const [authState, setAuthState] = useState({
+    selectedKitchener: null,
+    isLoggedIn: false,
+  });
 
   const {
     socketData,
@@ -221,25 +222,33 @@ const KitchenerPage = () => {
         },
       },
     ])
-      .then(() => {
-        takePlatlloByFilter({
-          process: "GETTING_READY",
-          kitchener: {
-            id: authState.selectedKitchener.id,
-          },
-        })
-          .then((data) => {
-            setKitchenerDishes(data.content);
-            Alert.success("Exito", "Platillo tomado");
-            getOrdeToMade();
+      .then((data) => {
+        if (data[0].success) {
+          takePlatlloByFilter({
+            process: "GETTING_READY",
+            kitchener: {
+              id: authState.selectedKitchener.id,
+            },
           })
-          .catch(() => {
-            Alert.error(
-              "Error",
-              "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
-            );
-            getOrdeToMade();
-          });
+            .then((data) => {
+              setKitchenerDishes(data.content);
+              Alert.success("Exito", "Platillo tomado");
+              getOrdeToMade();
+            })
+            .catch(() => {
+              Alert.error(
+                "Error",
+                "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
+              );
+              getOrdeToMade();
+            });
+        } else {
+          Alert.error(
+            "Error",
+            "Ha ocurrido un error al tomar el platillo, se recargara la pagina"
+          );
+          getOrdeToMade();
+        }
       })
       .catch(() => {
         Alert.error("Error", "No se pudo enviar el pedido");

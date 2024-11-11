@@ -9,7 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import useIngredient from "@/hooks/IngredientService";
 import { useEffect, useState } from "react";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
+import Alert from "@/components/alert/AlertCustom";
 
 const columns = [
   { id: "consecutive", label: "#", minWidth: 50, align: "center" },
@@ -37,7 +40,7 @@ const columns = [
   {
     id: "options",
     label: "Options",
-    minWidth: 100,
+    minWidth: 10,
     align: "center",
   },
 ];
@@ -79,7 +82,9 @@ export default function TableIngredient({ searchText, refresh }) {
   };
 
   const handleDelete = (ingredientId) => {
-    console.log("Delete ingredient with ID:", ingredientId);
+    Alert.confirmDelete(() => {
+      
+    });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -147,7 +152,7 @@ export default function TableIngredient({ searchText, refresh }) {
                     );
                   })}
                   <TableCell align="center">
-                    <EditIco
+                    <EditIcon
                       style={{ cursor: "pointer", marginRight: 8 }}
                       onClick={() => handleEdit(row.id)}
                     />

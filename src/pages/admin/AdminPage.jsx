@@ -2,7 +2,6 @@ import HeaderComponent from "@/components/header/Header";
 import "./adminPage.css";
 import AdminPicker from "@/components/pickerAdmin/PickerAdmin";
 import { useEffect, useState } from "react";
-import TableIngredient from "./table/TableIngredientes";
 import TableDishes from "./table/TableDishes";
 import TableWaiters from "./table/TableWaiter";
 import TableKitchener from "./table/TableKitchener";
@@ -10,14 +9,23 @@ import TableOrders from "./table/TableOrders";
 import OperationsIcon from "@/assets/icons/OperationsIcon";
 import ReportsIcon from "@/assets/icons/ReportsIcon";
 import IAIcon from "@/assets/icons/IAIcon";
-import { TextField } from "@mui/material";
-import PredictionIcon from "@/assets/icons/predictIcon";
-import Alert from "@/components/alert/AlertCustom";
-import TablePrediction from "./table/TablePrediction";
 import PredictionComponent from "./prediction/PredictionComponent";
 import Helper from "@/components/helper/helper";
 import IngredientsOperations from "./ingredients/IngredientesOperations";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
+import useWebSocket from "@/hooks/useWebSocket";
+
+const generateAndStoreUID = () => {
+  // Genera un UID de forma manual
+  const uid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+
+  localStorage.setItem("adminID", uid); // Guarda el UID en localStorage
+  return uid;
+};
 
 const AdminPage = () => {
   const [selectedOption, setSelectedOption] = useState({
@@ -42,6 +50,49 @@ const AdminPage = () => {
     setSelectedOption({ ...selectedOption, second: category });
   };
 
+  const [authState, setAuthState] = useState({
+    adminID: localStorage.getItem("adminID") || generateAndStoreUID(),
+    isLoggedIn: true, // El admin está automáticamente autenticado
+  });
+
+  const {
+    socketData,
+    isConnected,
+    error: errorSocket,
+    connect,
+    disconnect,
+  } = useWebSocket(authState.adminID, "admin");
+
+  useEffect(() => {
+    if (!isConnected) {
+      connect();
+    }
+
+    // Desconectar al desmontar el componente para evitar conexiones no deseadas
+    return () => {
+      if (isConnected) {
+        disconnect();
+      }
+    };
+  }, [isConnected, connect, disconnect]);
+
+  useEffect(() => {
+    if (errorSocket) {
+      console.error("Error en el WebSocket:", errorSocket);
+      disconnect(); // Desconectar si hay error en WebSocket
+    } else if (isConnected) {
+      console.log("WebSocket conectado:", socketData);
+    }
+
+    if (socketData && socketData.action === "NEW_PREDICTION") {
+      const ingredientsList = socketData.message.join(", "); // Une los nombres con comas
+      setNotification({
+        isVisible: true,
+        message: `Se necesita con urgencia estos ingredientes: ${ingredientsList}`,
+      });
+    }
+  }, [errorSocket, isConnected, socketData]);
+
   // Define las opciones del Picker secundario basadas en la selección del primero
   const getSecondaryOptions = () => {
     if (selectedOption.first === "INGREDIENTS") {
@@ -59,7 +110,10 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    if (selectedOption.first === "INGREDIENTS" && selectedOption.second === "PREDICTIONS") {
+    if (
+      selectedOption.first === "INGREDIENTS" &&
+      selectedOption.second === "PREDICTIONS"
+    ) {
       setNotification({
         isVisible: true,
         message: "Please select a date to generate a prediction based on it.",

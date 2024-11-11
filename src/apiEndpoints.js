@@ -10,7 +10,7 @@ const apiEndpoints = {
     predict: "/ingredient/predict",
     create: "/ingredient",
     update: (id) => `/ingredient/${id}`,
-    delete: (id) => `/ingredient/${id}`,
+    delete: (id) => `/ingredient?uuid=${id}`,
   },
   waiters: {
     getAll: "/waiter",
