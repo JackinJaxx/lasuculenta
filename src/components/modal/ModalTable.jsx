@@ -20,7 +20,7 @@ const ModalTable = ({ handlers, isVisible }) => {
     (error ? (
       <div className="error-msg">
         <ErrorIcon />
-        <p>Ha ocurrido un error al cargar las mesas</p>
+        <p>An error occurred while loading the tables</p>
       </div>
     ) : loading ? (
       <Loader isLoading={loading} />
@@ -28,7 +28,7 @@ const ModalTable = ({ handlers, isVisible }) => {
       <div className="modal-overlay">
         <div className="modal-table">
           <div className="modal-header">
-            <p>Selecciona una mesa</p>
+            <p>Select a table</p>
             <button onClick={handlers.closePopupHandler}>
               <ShoppingMinimizeIcon />
             </button>

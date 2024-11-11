@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import useIngredient from "@/hooks/IngredientService";
 import { useEffect, useState } from "react";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
+import PropTypes from "prop-types";
 
 const columns = [
   { id: "consecutive", label: "#", minWidth: 50, align: "center" },
@@ -18,7 +19,6 @@ const columns = [
     label: "Cost",
     minWidth: 100,
     align: "center",
-    //FORMATO DE MONEDA
     format: (value) => `$${value.toFixed(2)}`,
   },
   {
@@ -34,13 +34,35 @@ const columns = [
     align: "center",
     format: (value) => value.toFixed(2),
   },
+  {
+    id: "options",
+    label: "Options",
+    minWidth: 100,
+    align: "center",
+  },
 ];
 
-export default function TableIngredient() {
+export default function TableIngredient({ searchText, refresh }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data, loading, error, fetchIngredients } = useIngredient();
   const [ingredientes, setIngredientes] = useState([]);
+  const [refreshTable, setRefreshTable] = useState(refresh);
+
+  useEffect(() => {
+    if (refresh) {
+      setRefreshTable(true);
+    } else {
+      setRefreshTable(false);
+    }
+  }, [refresh]);
+
+  useEffect(() => {
+    if (refreshTable) {
+      fetchIngredients();
+      setRefreshTable(false);
+    }
+  }, [refreshTable]);
 
   useEffect(() => {
     fetchIngredients();
@@ -52,6 +74,14 @@ export default function TableIngredient() {
     }
   }, [data]);
 
+  const handleEdit = (ingredientId) => {
+    console.log("Edit ingredient with ID:", ingredientId);
+  };
+
+  const handleDelete = (ingredientId) => {
+    console.log("Delete ingredient with ID:", ingredientId);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -60,6 +90,12 @@ export default function TableIngredient() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const filteredIngredients = ingredientes.filter(
+    (ingredient) =>
+      ingredient.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      ingredient.unit.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -84,7 +120,7 @@ export default function TableIngredient() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {(loading && ingredientes.length === 0) && (
+            {loading && ingredientes.length === 0 && (
               <TableRow>
                 <TableCell colSpan={columns.length} align="center">
                   <div className="loading-icon-table">
@@ -92,35 +128,43 @@ export default function TableIngredient() {
                   </div>
                 </TableCell>
               </TableRow>
-          )}
-            {ingredientes
+            )}
+            {filteredIngredients
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    <TableCell align="center">
-                      {page * rowsPerPage + index + 1}
-                    </TableCell>
-                    {columns.slice(1).map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+              .map((row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell align="center">
+                    {page * rowsPerPage + index + 1}
+                  </TableCell>
+                  {columns.slice(1, -1).map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                  <TableCell align="center">
+                    <EditIco
+                      style={{ cursor: "pointer", marginRight: 8 }}
+                      onClick={() => handleEdit(row.id)}
+                    />
+                    <DeleteIcon
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDelete(row.id)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={ingredientes.length}
+        count={filteredIngredients.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -129,3 +173,8 @@ export default function TableIngredient() {
     </Paper>
   );
 }
+
+TableIngredient.propTypes = {
+  searchText: PropTypes.string.isRequired,
+  refresh: PropTypes.bool,
+};

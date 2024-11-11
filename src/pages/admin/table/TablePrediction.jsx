@@ -44,7 +44,20 @@ const columns = [
     align: "center",
     format: (value) => value.toFixed(2),
   },
-  { id: "priority", label: "Priority", minWidth: 10, align: "center" , format: (value) => value.toUpperCase()},
+  {
+    id: "priority",
+    label: "Priority",
+    minWidth: 10,
+    align: "center",
+    format: (value) => {
+      const translations = {
+        mucho: "HIGH",
+        moderado: "MODERATE",
+        poco: "LOW",
+      };
+      return translations[value.toLowerCase()] || value.toUpperCase();
+    },
+  },
 ];
 
 const TablePrediction = ({ date }) => {

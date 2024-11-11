@@ -40,7 +40,30 @@ const useIngredient = () => {
     }
   };
 
-  return { data, loading, error, fetchIngredients, predictIngredients };
+  const addIngredient = async (ingredient) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchData(baseUrl + apiEndpoints.ingredient.create, {
+        method: "POST",
+        body: ingredient,
+      });
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    data,
+    loading,
+    error,
+    fetchIngredients,
+    predictIngredients,
+    addIngredient,
+  };
 };
 
 export default useIngredient;

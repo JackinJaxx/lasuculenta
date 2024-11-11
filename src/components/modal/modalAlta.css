@@ -1,0 +1,9 @@
+.form-alta{
+    display: flex;
+    gap: 20px;
+}
+
+.ingredient-save-btn{
+    height: auto !important;
+    margin-top: 20px;
+}
