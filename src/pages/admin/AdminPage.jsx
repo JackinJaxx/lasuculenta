@@ -15,6 +15,7 @@ import PredictionIcon from "@/assets/icons/predictIcon";
 import Alert from "@/components/alert/AlertCustom";
 import TablePrediction from "./table/TablePrediction";
 import PredictionComponent from "./prediction/PredictionComponent";
+import Helper from "@/components/helper/helper";
 
 const AdminPage = () => {
   const [selectedOption, setSelectedOption] = useState({
@@ -141,6 +142,7 @@ const AdminPage = () => {
             <div className="admin-content">{renderContent()}</div>
           </div>
         </div>
+        <Helper icon={<IAIcon/>} view="admin" aligment="right" />
       </div>
     </>
   );

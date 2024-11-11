@@ -1,26 +1,30 @@
 .helper-card {
-    display: flex;
-    position: fixed;
-    bottom: 30px;
-    left: 93px;
-    background-color: var(--ColorTerracota);
-    border-radius: 20px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    z-index: 1000; /* Asegura que el ícono esté sobre otros elementos */
-  
-    transition: box-shadow 0.3s;
-    transition: transform 0.3s;
-  }
+  display: flex;
+  position: fixed;
+  bottom: 30px;
+  background-color: var(--ColorTerracota);
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
 
-  .shopping-minimize svg {
-    color: var(--ColorTerracota);
-    cursor: pointer;
-  }
-  
-  
-  .helper-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
-  }
+.helper-card.align-left {
+  left: 93px;
+}
+
+.helper-card.align-right {
+  right: 93px;
+}
+
+.helper-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.helper-card > svg {
+  fill: var(--ColorCrema);
+}
+
