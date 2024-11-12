@@ -52,13 +52,13 @@
   line-height: 22px; /* 91.667% */
 }
 
-.admin-predictions{
+.admin-predictions {
   display: flex;
   justify-content: center;
   gap: 20px;
   width: 100%;
 }
-.btn-predictions{
+.btn-predictions {
   display: flex;
   box-sizing: border-box;
   justify-content: center;

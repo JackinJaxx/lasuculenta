@@ -25,17 +25,15 @@ const usePlatillos = () => {
     }
   };
 
-  // Función para guardar un nuevo platillo
-  const savePlatillo = async (platilloData) => {
+  const saveDish = async (ingredient) => {
     setLoading(true);
     setError(null);
-
     try {
-      const response = await fetchData(
-        "https://7c366e536fe34a129598d8cd91c767f3.api.mockbin.io/",
-        { method: "POST", body: platilloData }
-      );
-      setData((prevData) => [...prevData, response]);
+      const data = await fetchData(baseUrl + apiEndpoints.platillos.create, {
+        method: "POST",
+        body: ingredient,
+      });
+      setData(data);
     } catch (error) {
       setError(error);
     } finally {
@@ -43,7 +41,7 @@ const usePlatillos = () => {
     }
   };
 
-  return { data, loading, error, fetchPlatillos, savePlatillo };
+  return { data, loading, error, fetchPlatillos, saveDish };
 };
 
 export default usePlatillos;

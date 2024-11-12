@@ -10,7 +10,6 @@ import useIngredient from "@/hooks/IngredientService";
 import { useEffect, useState } from "react";
 import LoadingIcon from "@/assets/icons/LoadingIcon";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
 import Alert from "@/components/alert/AlertCustom";
 
@@ -80,7 +79,7 @@ export default function TableIngredient({ searchText, refresh, handleEdit }) {
   const onEdit = (ingredientId) => {
     if (typeof handleEdit === "function") {
       const ingredient = ingredientes.find((i) => i.id === ingredientId);
-      if(ingredient){
+      if (ingredient) {
         console.log(ingredient);
         handleEdit(ingredient);
       }

@@ -15,6 +15,7 @@ import IngredientsOperations from "./ingredients/IngredientesOperations";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
 import useWebSocket from "@/hooks/useWebSocket";
 import HelperIcon from "@/assets/icons/HelperIcon";
+import DishesOperations from "./dishes/DishesOperations";
 
 const generateAndStoreUID = () => {
   // Genera un UID de forma manual
@@ -126,14 +127,7 @@ const AdminPage = () => {
     }
 
     if (first === "DISHES" && second === "OPERATIONS") {
-      return (
-        <div className="ingredeint-operation">
-          <div>OPERACIONES</div>
-          <div className="admin-table">
-            <TableDishes />
-          </div>
-        </div>
-      );
+      return <DishesOperations />;
     }
 
     if (first === "WAITERS" && second === "OPERATIONS") {

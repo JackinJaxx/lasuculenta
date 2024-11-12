@@ -1,0 +1,23 @@
+.ingredient-save-btn {
+    background: var(--ColorCafeOscuro);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 100px;
+    font-family: "Arima Madurai";
+    font-size: 20px;
+    transition: background 0.3s;
+    transition: transform 0.3s;
+  }
+  
+  .ingredient-save-btn:hover {
+    background: var(--ColorCafeClaro);
+    transform: scale(1.1);
+  }
+  
+  .ingredient-save-btn:focus {
+      background: var(--ColorCafeClaro);
+      transform: scale(1.1);
+  }
+  
+  
