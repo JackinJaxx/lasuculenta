@@ -3,10 +3,11 @@
   align-items: center;
   box-sizing: border-box;
   padding-left: 10px;
+  padding-right: 10px;
   width: 100%;
   gap: 10px;
   max-width: 320px;
-  height: 120px;
+  min-height: 90px;
   position: fixed;
   top: 34px;
   right: 93px;
@@ -55,6 +56,8 @@
 .notification-content {
   display: flex;
   box-sizing: border-box;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .notification-content p {

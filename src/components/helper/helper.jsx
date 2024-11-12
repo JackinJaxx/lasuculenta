@@ -11,6 +11,8 @@ const Helper = ({ icon, view, aligment = "left", onAdminAction }) => {
         return "https://drive.usercontent.google.com/u/2/uc?id=1_LVChvUQvxSvdByq9ManuSxAf0B0b9HM&export=download";
       case "customer":
         return "https://drive.usercontent.google.com/u/2/uc?id=1Sn4aS8Mi1a6q-y5WV6211hDlp1lrpFAH&export=download";
+        case "admi":
+          return "https://drive.usercontent.google.com/u/2/uc?id=1Vb6LnJkUu5rrA3b62QSCYeakD2MTCbMc&export=download";
       default:
         return "https://default.example.com";
     }

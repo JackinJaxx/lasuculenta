@@ -60,15 +60,37 @@ const useIngredient = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchData(baseUrl + apiEndpoints.ingredient.delete(id), {
-        method: "DELETE",
-      });
+      const data = await fetchData(
+        baseUrl + apiEndpoints.ingredient.delete(id),
+        {
+          method: "DELETE",
+        }
+      );
       setData(data);
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateIngredient = async (ingredient) => {
+    setLoading(true);
+    setError(null);
+
+    return fetchData(baseUrl + apiEndpoints.ingredient.update, {
+      method: "PUT",
+      body: ingredient,
+    })
+      .then((response) => {
+        return response; // Resuelve la promesa con la respuesta
+      })
+      .catch((error) => {
+        return Promise.reject(error); // Rechaza la promesa con el error
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return {
@@ -78,6 +100,8 @@ const useIngredient = () => {
     fetchIngredients,
     predictIngredients,
     addIngredient,
+    deleteIngredient,
+    updateIngredient,
   };
 };
 

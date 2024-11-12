@@ -14,6 +14,7 @@ import Helper from "@/components/helper/helper";
 import IngredientsOperations from "./ingredients/IngredientesOperations";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
 import useWebSocket from "@/hooks/useWebSocket";
+import HelperIcon from "@/assets/icons/HelperIcon";
 
 const generateAndStoreUID = () => {
   // Genera un UID de forma manual
@@ -38,18 +39,6 @@ const AdminPage = () => {
     message: "",
   });
 
-  const handleSelectedOption = (category) => {
-    setSelectedOption({
-      ...selectedOption,
-      first: category,
-      second: "OPERATIONS",
-    });
-  };
-
-  const handleSelectedSecondOption = (category) => {
-    setSelectedOption({ ...selectedOption, second: category });
-  };
-
   const [authState, setAuthState] = useState({
     adminID: localStorage.getItem("adminID") || generateAndStoreUID(),
     isLoggedIn: true, // El admin está automáticamente autenticado
@@ -63,6 +52,10 @@ const AdminPage = () => {
     disconnect,
   } = useWebSocket(authState.adminID, "admin");
 
+  const handleNotificationClose = () => {
+    setNotification({ isVisible: false, message: "" });
+  };
+
   useEffect(() => {
     if (!isConnected) {
       connect();
@@ -74,21 +67,21 @@ const AdminPage = () => {
         disconnect();
       }
     };
-  }, [isConnected, connect, disconnect]);
+  }, [isConnected]);
 
   useEffect(() => {
     if (errorSocket) {
       console.error("Error en el WebSocket:", errorSocket);
       disconnect(); // Desconectar si hay error en WebSocket
     } else if (isConnected) {
-      console.log("WebSocket conectado:", socketData);
+      console.log("WebSocket conectado:");
     }
 
     if (socketData && socketData.action === "NEW_PREDICTION") {
       const ingredientsList = socketData.message.join(", "); // Une los nombres con comas
       setNotification({
         isVisible: true,
-        message: `Se necesita con urgencia estos ingredientes: ${ingredientsList}`,
+        message: `These ingredients are urgently needed: ${ingredientsList}`,
       });
     }
   }, [errorSocket, isConnected, socketData]);
@@ -98,10 +91,10 @@ const AdminPage = () => {
     if (selectedOption.first === "INGREDIENTS") {
       return [
         { value: "OPERATIONS", label: "Operations", icon: OperationsIcon },
-        { value: "REPORTS", label: "Reports", icon: ReportsIcon },
         { value: "PREDICTIONS", label: "Predictions", icon: IAIcon },
       ];
     }
+
     // Opciones secundarias predeterminadas para otras selecciones
     return [
       { value: "OPERATIONS", label: "Operations", icon: OperationsIcon },
@@ -109,19 +102,17 @@ const AdminPage = () => {
     ];
   };
 
-  useEffect(() => {
-    if (
-      selectedOption.first === "INGREDIENTS" &&
-      selectedOption.second === "PREDICTIONS"
-    ) {
-      setNotification({
-        isVisible: true,
-        message: "Please select a date to generate a prediction based on it.",
-      });
-    } else {
-      setNotification({ isVisible: false, message: "" });
-    }
-  }, [selectedOption]);
+  const handleSelectedOption = (category) => {
+    setSelectedOption({
+      ...selectedOption,
+      first: category,
+      second: "OPERATIONS",
+    });
+  };
+
+  const handleSelectedSecondOption = (category) => {
+    setSelectedOption({ ...selectedOption, second: category });
+  };
 
   const renderContent = () => {
     const { first, second } = selectedOption;
@@ -211,9 +202,11 @@ const AdminPage = () => {
             setSelectedOption({ first: "INGREDIENTS", second: "PREDICTIONS" })
           }
         />
+        <Helper icon={<HelperIcon />} view="admi" />
         <NotificationFloat
           isVisible={notification.isVisible}
           message={notification.message}
+          onClose={handleNotificationClose}
         />
       </div>
     </>

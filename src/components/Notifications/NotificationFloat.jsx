@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import "./notificationFloat.css";
 const NotificationFloat = ({
   isVisible,
-  message = "¡Tienes una nueva notificación",
+  message = "¡Do you have a new notification!",
+  onClose = () => {},
 }) => {
   const [visible, setVisible] = useState(isVisible);
   const [animationClass, setAnimationClass] = useState("");
@@ -17,6 +18,7 @@ const NotificationFloat = ({
       // Cerrar automáticamente después de 3 segundos
       const timer = setTimeout(() => {
         setAnimationClass("slide-out");
+        onClose();
       }, 3000);
 
       // Limpia el temporizador al desmontar o si isVisible cambia
@@ -28,6 +30,7 @@ const NotificationFloat = ({
 
   const handleClose = () => {
     setAnimationClass("slide-out"); // Activa la animación de salida
+    onClose(); // Notifica al padre para que actualice `isVisible`
   };
 
   const handleAnimationEnd = () => {
@@ -79,6 +82,7 @@ const NotificationFloat = ({
 NotificationFloat.propTypes = {
   isVisible: PropTypes.bool,
   message: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 export default NotificationFloat;

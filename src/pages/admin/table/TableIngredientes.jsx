@@ -45,7 +45,7 @@ const columns = [
   },
 ];
 
-export default function TableIngredient({ searchText, refresh }) {
+export default function TableIngredient({ searchText, refresh, handleEdit }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data, loading, error, fetchIngredients } = useIngredient();
@@ -77,14 +77,18 @@ export default function TableIngredient({ searchText, refresh }) {
     }
   }, [data]);
 
-  const handleEdit = (ingredientId) => {
-    console.log("Edit ingredient with ID:", ingredientId);
+  const onEdit = (ingredientId) => {
+    if (typeof handleEdit === "function") {
+      const ingredient = ingredientes.find((i) => i.id === ingredientId);
+      if(ingredient){
+        console.log(ingredient);
+        handleEdit(ingredient);
+      }
+    }
   };
 
   const handleDelete = (ingredientId) => {
-    Alert.confirmDelete(() => {
-      
-    });
+    Alert.confirmDelete(() => {});
   };
 
   const handleChangePage = (event, newPage) => {
@@ -154,11 +158,7 @@ export default function TableIngredient({ searchText, refresh }) {
                   <TableCell align="center">
                     <EditIcon
                       style={{ cursor: "pointer", marginRight: 8 }}
-                      onClick={() => handleEdit(row.id)}
-                    />
-                    <DeleteIcon
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDelete(row.id)}
+                      onClick={() => onEdit(row.id)}
                     />
                   </TableCell>
                 </TableRow>
@@ -182,4 +182,5 @@ export default function TableIngredient({ searchText, refresh }) {
 TableIngredient.propTypes = {
   searchText: PropTypes.string.isRequired,
   refresh: PropTypes.bool,
+  handleEdit: PropTypes.func,
 };
