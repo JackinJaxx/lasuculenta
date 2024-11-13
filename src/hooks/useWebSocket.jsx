@@ -12,6 +12,8 @@ const useWebSocket = (userId, role) => {
   const connect = useCallback(() => {
     if (!userId || !role || isConnected) return;
     console.log("Conectando al WebSocket...");
+
+    //conexion al websocket
     const socket = new WebSocket(
       `${baseWebSocketUrl}?userId=${userId}&role=${role}`
     );
@@ -65,5 +67,6 @@ const useWebSocket = (userId, role) => {
 
   return { socketData, isConnected, error, connect, disconnect };
 };
+
 
 export default useWebSocket;

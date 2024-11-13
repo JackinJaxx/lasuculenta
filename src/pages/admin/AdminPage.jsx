@@ -98,8 +98,7 @@ const AdminPage = () => {
 
     // Opciones secundarias predeterminadas para otras selecciones
     return [
-      { value: "OPERATIONS", label: "Operations", icon: OperationsIcon },
-      { value: "REPORTS", label: "Reports", icon: ReportsIcon },
+      { value: "OPERATIONS", label: "Operations", icon: OperationsIcon }
     ];
   };
 
