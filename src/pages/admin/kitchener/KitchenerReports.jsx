@@ -1,6 +1,6 @@
 import Loader from "@/components/spinner/Spinner";
 import TableDishes from "../table/TableDishes";
-import "./waitersReports.css";
+import "./kitchenerReports.css";
 import { useState } from "react";
 import {
   Radio,
@@ -15,14 +15,16 @@ import SearchBar from "@/components/search/Search";
 import TableWaiterReport from "../table/TableReportWaiter";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
 import { set } from "react-hook-form";
+import { Kitchen } from "@mui/icons-material";
+import TableKitchenerReport from "../table/TableReportKitchenerBest";
 
-const WaitersReports = () => {
+const KitchenerReports = () => {
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [selectedReport, setSelectedReport] = useState(""); // Estado para el radio button seleccionado
   const [since, setSince] = useState(""); // Estado para la fecha 'since'
-  const [from1, setFrom1] = useState(""); // Estado para la fecha 'from'
+  const [from, setFrom] = useState(""); // Estado para la fecha 'from'
   const [validate, setValidate] = useState(false);
   const handleRadioChange = (event) => {
     setSelectedReport(event.target.value);
@@ -66,7 +68,7 @@ const WaitersReports = () => {
             value="costoCartaVsCostoReal"
             className="radio-button"
             control={<Radio />}
-            label="Name of the waiter who takes the most orders"
+            label="Name of the kitchener who takes the most orders"
           />
         </RadioGroup>
       </FormControl>
@@ -80,11 +82,10 @@ const WaitersReports = () => {
                 type="date"
                 value={since}
                 onChange={(e) => {
-                    if(validate){
-                        setValidate(false);
-                       
-                    }
-                    setSince(e.target.value);
+                  if (validate) {
+                    setValidate(false);
+                  }
+                  setSince(e.target.value);
                 }}
                 InputLabelProps={{
                   shrink: true,
@@ -93,13 +94,12 @@ const WaitersReports = () => {
               <TextField
                 label="From"
                 type="date"
-                value={from1}
+                value={from}
                 onChange={(e) => {
-                    if(validate){
-                        setValidate(false);
-                      
-                    }
-                    setFrom1(e.target.value);
+                  if (validate) {
+                    setValidate(false);
+                  }
+                  setFrom(e.target.value);
                 }}
                 InputLabelProps={{
                   shrink: true,
@@ -108,8 +108,7 @@ const WaitersReports = () => {
               <button
                 className="ingredient-save-btn"
                 onClick={() => {
-                   
-                  if (since && from1) {
+                  if (since && from) {
                     setRefresh(true);
                     setValidate(true);
                   } else {
@@ -129,11 +128,11 @@ const WaitersReports = () => {
                   placeholder={"Search"}
                   onChange={handleSearchChange}
                 />
-                <TableWaiterReport
+                <TableKitchenerReport
                   searchText={searchText}
                   refresh={refresh}
                   since={since}
-                  from={from1}
+                  from={from}
                 />
               </>
             )}
@@ -147,4 +146,4 @@ const WaitersReports = () => {
   );
 };
 
-export default WaitersReports;
+export default KitchenerReports;

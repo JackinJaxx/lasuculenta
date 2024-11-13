@@ -19,6 +19,9 @@ import DishesOperations from "./dishes/DishesOperations";
 import DishesReports from "./dishes/DishesReports";
 import WaitersOperations from "./waiters/WaitersOperations";
 import WaitersReports from "./waiters/WaitersReports";
+import KitchenerOperations from "./kitchener/KitchenerOperations";
+import TableKitchenerReport from "./table/TableReportKitchenerBest";
+import KitchenerReports from "./kitchener/KitchenerReports";
 
 const generateAndStoreUID = () => {
   // Genera un UID de forma manual
@@ -146,14 +149,11 @@ const AdminPage = () => {
     }
 
     if (first === "KITCHENER" && second === "OPERATIONS") {
-      return (
-        <div className="ingredeint-operation">
-          <div>OPERACIONES</div>
-          <div className="admin-table">
-            <TableKitchener />
-          </div>
-        </div>
-      );
+      return <KitchenerOperations />;
+    }
+
+    if (first === "KITCHENER" && second === "REPORTS") {
+      return <KitchenerReports />;
     }
 
     if (first === "ORDERS" && second === "OPERATIONS") {

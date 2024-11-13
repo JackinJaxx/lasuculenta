@@ -1,3 +1,5 @@
+import { get } from "react-hook-form";
+
 const apiEndpoints = {
   platillos: {
     getAll: "/dish",
@@ -33,6 +35,7 @@ const apiEndpoints = {
   kitcheners: {
     getAll: "/kitchener",
     create: "/kitchener",
+    getBest: "/kitchener/best",
     update: (id) => `/kitchener/${id}`,
     delete: (id) => `/kitchener/${id}`,
   },
