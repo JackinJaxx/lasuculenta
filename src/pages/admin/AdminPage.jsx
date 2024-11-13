@@ -16,6 +16,9 @@ import NotificationFloat from "@/components/Notifications/NotificationFloat";
 import useWebSocket from "@/hooks/useWebSocket";
 import HelperIcon from "@/assets/icons/HelperIcon";
 import DishesOperations from "./dishes/DishesOperations";
+import DishesReports from "./dishes/DishesReports";
+import WaitersOperations from "./waiters/WaitersOperations";
+import WaitersReports from "./waiters/WaitersReports";
 
 const generateAndStoreUID = () => {
   // Genera un UID de forma manual
@@ -98,7 +101,8 @@ const AdminPage = () => {
 
     // Opciones secundarias predeterminadas para otras selecciones
     return [
-      { value: "OPERATIONS", label: "Operations", icon: OperationsIcon }
+      { value: "OPERATIONS", label: "Operations", icon: OperationsIcon },
+      { value: "REPORTS", label: "Reports", icon: ReportsIcon },
     ];
   };
 
@@ -129,15 +133,16 @@ const AdminPage = () => {
       return <DishesOperations />;
     }
 
+    if (first === "DISHES" && second === "REPORTS") {
+      return <DishesReports />;
+    }
+
     if (first === "WAITERS" && second === "OPERATIONS") {
-      return (
-        <div className="ingredeint-operation">
-          <div>OPERACIONES</div>
-          <div className="admin-table">
-            <TableWaiters />
-          </div>
-        </div>
-      );
+      return <WaitersOperations />;
+    }
+
+    if (first === "WAITERS" && second === "REPORTS") {
+      return <WaitersReports />;
     }
 
     if (first === "KITCHENER" && second === "OPERATIONS") {

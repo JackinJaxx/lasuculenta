@@ -41,7 +41,20 @@ const usePlatillos = () => {
     }
   };
 
-  return { data, loading, error, fetchPlatillos, saveDish };
+  const getAllSellTable = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchData(baseUrl + apiEndpoints.platillos.getAllCost);
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { data, loading, error, fetchPlatillos, saveDish , getAllSellTable };
 };
 
 export default usePlatillos;

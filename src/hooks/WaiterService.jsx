@@ -2,7 +2,6 @@ import { useState } from "react";
 import fetchData from "@utils/FetchData";
 import apiEndpoints from "@/apiEndpoints";
 
-
 const useWaiters = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,16 +26,15 @@ const useWaiters = () => {
   };
 
   // Función para guardar un nuevo mesero
-  const saveWaiter = async (waiterData) => {
+  const saveWaiter = async (ingredient) => {
     setLoading(true);
     setError(null);
-
     try {
-      const response = await fetchData(
-        "https://2f1969941aa14f9aa96faf51882b57d3.api.mockbin.io/",
-        { method: "POST", body: waiterData }
-      );
-      setData((prevData) => [...prevData, response]);
+      const data = await fetchData(baseUrl + apiEndpoints.waiters.create, {
+        method: "POST",
+        body: ingredient,
+      });
+      setData(data);
     } catch (error) {
       setError(error);
     } finally {
@@ -44,7 +42,23 @@ const useWaiters = () => {
     }
   };
 
-  return { data, loading, error, fetchWaiters, saveWaiter };
+  const bestWaiters = async (since, from) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await fetchData(
+        baseUrl + apiEndpoints.waiters.getBest + `?since=${since}&from=${from}`
+      );
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { data, loading, error, fetchWaiters, saveWaiter, bestWaiters };
 };
 
 export default useWaiters;

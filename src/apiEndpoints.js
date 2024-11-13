@@ -2,6 +2,7 @@ const apiEndpoints = {
   platillos: {
     getAll: "/dish",
     create: "/dish",
+    getAllCost: "/dish/selltable",
     update: (id) => `/platillos/${id}`,
     delete: (id) => `/platillos/${id}`,
   },
@@ -15,6 +16,7 @@ const apiEndpoints = {
   waiters: {
     getAll: "/waiter",
     create: "/waiter",
+    getBest: "/waiter/best",
     update: (id) => `/waiter/${id}`,
     delete: (id) => `/waiter/${id}`,
   },
