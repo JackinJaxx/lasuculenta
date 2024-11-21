@@ -22,6 +22,8 @@ import WaitersReports from "./waiters/WaitersReports";
 import KitchenerOperations from "./kitchener/KitchenerOperations";
 import TableKitchenerReport from "./table/TableReportKitchenerBest";
 import KitchenerReports from "./kitchener/KitchenerReports";
+import OrdersOperations from "./orders/OrdersOperations";
+import OrdersReports from "./orders/OrdersReports";
 
 const generateAndStoreUID = () => {
   // Genera un UID de forma manual
@@ -157,14 +159,11 @@ const AdminPage = () => {
     }
 
     if (first === "ORDERS" && second === "OPERATIONS") {
-      return (
-        <div className="ingredeint-operation">
-          <div>OPERACIONES</div>
-          <div className="admin-table">
-            <TableOrders />
-          </div>
-        </div>
-      );
+      return <OrdersOperations />;
+    }
+
+    if (first === "ORDERS" && second === "REPORTS") {
+      return <OrdersReports />;
     }
 
     // Puedes seguir añadiendo condicionales para cada combinación de `first` y `second`

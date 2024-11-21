@@ -159,6 +159,36 @@ const useOrders = () => {
       });
   };
 
+  const getProcess = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await fetchData(baseUrl + apiEndpoints.orders.process);
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getSold = async (since, until) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await fetchData(
+        baseUrl + apiEndpoints.orders.sold + `?since=${since}&until=${until}&page=0&size=100`
+      );
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     data,
     loading,
@@ -171,6 +201,8 @@ const useOrders = () => {
     completePlatllo,
     getOrdersReady,
     takeDelivery,
+    getProcess,
+    getSold,
   };
 };
 

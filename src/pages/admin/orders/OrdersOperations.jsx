@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./dishesOperations.css";
+import "./ordersOperations.css";
 import usePlatillos from "@/hooks/PlatillosService";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
 import Loader from "@/components/spinner/Spinner";
@@ -21,8 +21,9 @@ import {
 import SearchBar from "@/components/search/Search";
 import TableDishes from "../table/TableDishes";
 import useIngredient from "@/hooks/IngredientService";
+import TableOrders from "../table/TableOrders";
 
-const DishesOperations = () => {
+const OrdersOperations = () => {
   const [searchText, setSearchText] = useState(""); // Estado para el texto de búsqueda
   const [altaModal, setAltaModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -393,23 +394,13 @@ const DishesOperations = () => {
         className="admin-predictions"
         style={{ justifyContent: "space-between" }}
       >
-        <button
-          className="ingredient-save-btn"
-          onClick={() => setAltaModal(true)}
-        >
-          New Dish
-        </button>
-        <SearchBar placeholder={"Search"} onChange={handleSearchChange} />
+       
       </div>
       <div className="admin-table">
-        <TableDishes
-          searchText={searchText}
-          refresh={refresh}
-          handleEdit={handleEdit}
-        />
+        <TableOrders/>
       </div>
     </div>
   );
 };
 
-export default DishesOperations;
+export default OrdersOperations;

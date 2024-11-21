@@ -31,6 +31,8 @@ const apiEndpoints = {
     finishPlatllo: "/order/finish",
     create: "/order",
     filter: "/order/filter",
+    process: "/order/process",
+    sold: "/order/sold",
   },
   kitcheners: {
     getAll: "/kitchener",
