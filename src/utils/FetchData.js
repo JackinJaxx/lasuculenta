@@ -17,7 +17,7 @@ const fetchData = async (
   );
 
   // Usamos Promise.race para que la solicitud se cancele si se supera el límite de tiempo
-  const fetchPromise = fetch("http://"+ url, options);
+  const fetchPromise = fetch("https://"+ url, options);
 
   const response = await Promise.race([fetchPromise, timeoutPromise]);
 
