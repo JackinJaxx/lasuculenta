@@ -1,5 +1,5 @@
 import HeaderComponent from "@/components/header/Header";
-import "./adminPage.css";
+import "./adminpage.css";
 import AdminPicker from "@/components/pickerAdmin/PickerAdmin";
 import { useEffect, useState } from "react";
 import TableDishes from "./table/TableDishes";
