@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./WaitersOperations.css";
+import "./waitersOperations.css";
 import usePlatillos from "@/hooks/PlatillosService";
 import NotificationFloat from "@/components/Notifications/NotificationFloat";
 import Loader from "@/components/spinner/Spinner";
